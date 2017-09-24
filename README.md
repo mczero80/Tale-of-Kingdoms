@@ -1,2 +1,2 @@
-# Tale-of-Kingdoms
-Not official port for new versions Minecraft.
+# Tale of Kingdoms
+Not official port for Minecraft 1.7.10.
