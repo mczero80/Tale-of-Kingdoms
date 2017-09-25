@@ -4,25 +4,25 @@ import mods.aginsun.kingdoms.client.guis.GuiStableMaster;
 import mods.aginsun.kingdoms.entities.api.EntityNPC;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class EntityStableMaster extends EntityNPC {
+public final class EntityStableMaster extends EntityNPC {
 
    public EntityStableMaster(World par1World) {
-      super(par1World, new ItemStack(Item.leash), 40.0F);
+      super(par1World, new ItemStack(Items.lead), 40.0F);
    }
 
-   public boolean func_70104_M() {
+   public boolean canBePushed() {
       return false;
    }
 
-   protected boolean func_70780_i() {
+   protected boolean isMovementCeased() {
       return true;
    }
 
-   public boolean func_70085_c(EntityPlayer entityplayer) {
+   public boolean interact(EntityPlayer entityplayer) {
       if(this.canInteractWith(entityplayer)) {
          Minecraft.getMinecraft().displayGuiScreen(new GuiStableMaster());
       }

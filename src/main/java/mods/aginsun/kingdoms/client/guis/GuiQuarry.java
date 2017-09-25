@@ -1,9 +1,6 @@
 package mods.aginsun.kingdoms.client.guis;
 
 import cpw.mods.fml.common.FMLCommonHandler;
-import mods.aginsun.kingdoms.client.guis.GuiButtonShop;
-import mods.aginsun.kingdoms.client.guis.GuiPriceBar;
-import mods.aginsun.kingdoms.client.guis.GuiScreenToK;
 import mods.aginsun.kingdoms.handlers.GoldKeeper;
 import mods.aginsun.kingdoms.handlers.ResourceHandler;
 import mods.aginsun.kingdoms.handlers.WorkerHandler;
@@ -11,39 +8,41 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
-public class GuiQuarry extends GuiScreenToK {
+public final class GuiQuarry extends GuiScreenToK
+{
+    private World worldObj = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(0);
+    public EntityPlayer entityplayer;
+    boolean goldchecker = false;
+    private GuiPriceBar bar;
 
-   private World worldObj = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(0);
-   public EntityPlayer entityplayer;
-   boolean goldchecker = false;
-   private GuiPriceBar bar;
+    public GuiQuarry(EntityPlayer entityplayer1, World world)
+    {
+        this.entityplayer = entityplayer1;
+        this.worldObj = world;
+    }
 
-
-   public GuiQuarry(EntityPlayer entityplayer1, World world) {
-      this.entityplayer = entityplayer1;
-      this.worldObj = world;
-   }
-
-   public void func_73866_w_() {
-      this.bar = new GuiPriceBar(0, this.field_73880_f / 2 - 100, 40, 90, 12, 1.0F, "red");
+   public void initGui() {
+      this.bar = new GuiPriceBar(0, this.width / 2 - 100, 40, 90, 12, 1.0F, "red");
       this.bar.setBar((float)ResourceHandler.getInstance().getCobblePool() / 320.0F);
-      this.field_73887_h.add(new GuiButton(1, this.field_73880_f / 2 - 100, 75, 90, 20, "Collect 64"));
-      this.field_73887_h.add(new GuiButton(2, this.field_73880_f / 2 - 100, 95, 90, 20, "Buy Worker."));
-      this.field_73887_h.add(new GuiButton(3, this.field_73880_f / 2 - 100, 115, 90, 20, "Cancel."));
+      this.buttonList.add(new GuiButton(1, this.width / 2 - 100, 75, 90, 20, "Collect 64"));
+      this.buttonList.add(new GuiButton(2, this.width / 2 - 100, 95, 90, 20, "Buy Worker."));
+      this.buttonList.add(new GuiButton(3, this.width / 2 - 100, 115, 90, 20, "Cancel."));
    }
 
-   protected void func_73875_a(GuiButton guibutton) {
+   protected void actionPerformed(GuiButton guibutton) {
       if(guibutton.id == 1 && ResourceHandler.getInstance().getCobblePool() >= 64) {
-         ItemStack itemstack = new ItemStack(4, 64, 0);
-         EntityItem entityitem = new EntityItem(this.worldObj, this.entityplayer.field_70165_t, this.entityplayer.field_70163_u, this.entityplayer.field_70161_v, itemstack);
+         ItemStack itemstack = new ItemStack(Blocks.cobblestone, 64, 0);
+         EntityItem entityitem = new EntityItem(this.worldObj, this.entityplayer.posX, this.entityplayer.posY, this.entityplayer.posZ, itemstack);
          this.worldObj.spawnEntityInWorld(entityitem);
          this.goldchecker = false;
          ResourceHandler.getInstance().decreaseCobblePool(64);
       } else if(guibutton.id == 1 && ResourceHandler.getInstance().getCobblePool() < 64 && !this.worldObj.isRemote) {
-         this.entityplayer.addChatMessage("Foreman: Come back again later when we have the resources.");
+         this.entityplayer.addChatMessage(new ChatComponentText("Foreman: Come back again later when we have the resources."));
       }
 
       if(guibutton.id == 2) {
@@ -52,10 +51,10 @@ public class GuiQuarry extends GuiScreenToK {
                WorkerHandler.getInstance().addQuarryMember();
                GoldKeeper.decreaseGold(1500);
                if(!this.worldObj.isRemote) {
-                  this.entityplayer.addChatMessage("Foreman: He will begin to work immediately.");
+                  this.entityplayer.addChatMessage(new ChatComponentText("Foreman: He will begin to work immediately."));
                }
             } else if(!this.worldObj.isRemote) {
-               this.entityplayer.addChatMessage("Foreman: We have reached the capacity of men. Hire civilian workers instead.");
+               this.entityplayer.addChatMessage(new ChatComponentText("Foreman: We have reached the capacity of men. Hire civilian workers instead."));
             }
          } else {
             this.goldchecker = true;
@@ -63,29 +62,29 @@ public class GuiQuarry extends GuiScreenToK {
       }
 
       if(guibutton.id == 3) {
-         this.field_73882_e.displayGuiScreen((GuiScreen)null);
+         this.mc.displayGuiScreen((GuiScreen)null);
       }
 
    }
 
-   public void func_73863_a(int i, int j, float f) {
-      for(int k = 0; k < this.field_73887_h.size(); ++k) {
-         if(this.field_73887_h.get(k) instanceof GuiButtonShop) {
-            GuiButtonShop guibutton = (GuiButtonShop)this.field_73887_h.get(k);
-            guibutton.func_73737_a(this.field_73882_e, i, j);
+   public void drawScreen(int i, int j, float f) {
+      for(int k = 0; k < this.buttonList.size(); ++k) {
+         if(this.buttonList.get(k) instanceof GuiButtonShop) {
+            GuiButtonShop guibutton = (GuiButtonShop)this.buttonList.get(k);
+            guibutton.drawButton(this.mc, i, j);
          }
 
-         GuiButton var6 = (GuiButton)this.field_73887_h.get(k);
-         var6.drawButton(this.field_73882_e, i, j);
+         GuiButton var6 = (GuiButton)this.buttonList.get(k);
+         var6.drawButton(this.mc, i, j);
       }
 
       if(!this.goldchecker) {
-         this.func_73732_a(this.field_73886_k, "Foreman Menu - Total Money: " + GoldKeeper.getGoldTotal() + " Gold Coins", this.field_73880_f / 2, 15, 16777215);
+         this.drawString(this.fontRendererObj, "Foreman Menu - Total Money: " + GoldKeeper.getGoldTotal() + " Gold Coins", this.width / 2, 15, 16777215);
       } else {
-         this.func_73732_a(this.field_73886_k, "Foreman Menu - Total Money: " + GoldKeeper.getGoldTotal() + " Gold Coins - NOT ENOUGH GOLD", this.field_73880_f / 2, 15, 16777215);
+         this.drawString(this.fontRendererObj, "Foreman Menu - Total Money: " + GoldKeeper.getGoldTotal() + " Gold Coins - NOT ENOUGH GOLD", this.width / 2, 15, 16777215);
       }
 
-      this.func_73731_b(this.field_73886_k, "-Resources-    Note: Worker cost 1500 gold coins.", this.field_73880_f / 2 - 87, 55, 16777215);
+      this.drawString(this.fontRendererObj, "-Resources-    Note: Worker cost 1500 gold coins.", this.width / 2 - 87, 55, 16777215);
       this.bar.drawBar();
    }
 }

@@ -12,11 +12,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.src.ModLoader;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
@@ -24,7 +26,7 @@ public class EntityDefendPriest extends EntityNPC {
 
    private World field_70170_p = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(0);
    private EntityPlayer player;
-   private static ItemStack defaultHeldItem = new ItemStack(Item.stick, 1);
+   private static ItemStack defaultHeldItem = new ItemStack(Items.stick, 1);
    private boolean follow;
    private boolean checkPlayer;
    private int healCounter;
@@ -60,7 +62,7 @@ public class EntityDefendPriest extends EntityNPC {
       }
 
       if(this.follow) {
-         Minecraft var5 = ModLoader.getMinecraftInstance();
+         Minecraft var5 = Minecraft.getMinecraft();
          EntityClientPlayerMP entityplayersp = var5.thePlayer;
          if(entityplayersp != null) {
             float f = entityplayersp.func_70032_d(this);
@@ -82,12 +84,12 @@ public class EntityDefendPriest extends EntityNPC {
       if(!this.follow) {
          this.follow = true;
          if(!this.field_70170_p.isRemote) {
-            entityplayer.addChatMessage("Priest: I will follow you.");
+            entityplayer.addChatMessage(new ChatComponentText("Priest: I will follow you."));
          }
       } else {
          this.follow = false;
          if(!this.field_70170_p.isRemote) {
-            entityplayer.addChatMessage("Priest: I will guard this area.");
+            entityplayer.addChatMessage(new ChatComponentText("Priest: I will guard this area."));
          }
       }
 

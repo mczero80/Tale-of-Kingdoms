@@ -1,47 +1,45 @@
 package mods.aginsun.kingdoms.client.guis;
 
-import java.awt.Color;
-import mods.aginsun.kingdoms.client.guis.GuiPriceBar;
-import mods.aginsun.kingdoms.client.guis.GuiScreenToK;
 import mods.aginsun.kingdoms.handlers.SchematicHandler;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
 
-public class GuiToKLoading extends GuiScreenToK {
+import java.awt.*;
+
+public final class GuiToKLoading extends GuiScreenToK {
 
    GuiPriceBar bar;
    boolean flag;
 
 
-   public void func_73866_w_() {
-      this.bar = new GuiPriceBar(1, this.field_73880_f / 2 - 100, this.field_73881_g / 2 - 10, 200, 20, 1.0F, "red");
-      this.field_73887_h.add(new GuiButton(1, this.field_73880_f / 2 - 60, this.field_73881_g / 2 + 25, 120, 20, "Exit"));
+   public void initGui() {
+      this.bar = new GuiPriceBar(1, this.width / 2 - 100, this.height / 2 - 10, 200, 20, 1.0F, "red");
+      this.buttonList.add(new GuiButton(1, this.width / 2 - 60, this.height / 2 + 25, 120, 20, "Exit"));
    }
 
-   protected void func_73875_a(GuiButton guibutton) {
+   protected void actionPerformed(GuiButton guibutton) {
       if(guibutton.id == 1) {
-         this.field_73882_e.displayGuiScreen((GuiScreen)null);
+         this.mc.displayGuiScreen(null);
       }
 
    }
 
-   public void func_73863_a(int i, int j, float f) {
-      this.func_73873_v_();
+   public void drawScreen(int i, int j, float f) {
+      this.drawDefaultBackground();
       float d = SchematicHandler.getInstance().getProgressCurrentBuilding();
       if(!SchematicHandler.getInstance().getBuildingList().isEmpty()) {
          this.bar.setBar(d / 100.0F);
          this.bar.drawBar();
-         this.func_73731_b(this.field_73886_k, "Building the Guild...", this.field_73880_f / 2 - this.field_73886_k.getStringWidth("Building the Guild...") / 2, this.field_73881_g / 2 + 15, Color.pink.getRGB());
+         this.drawString(this.fontRendererObj, "Building the Guild...", this.width / 2 - fontRendererObj.getStringWidth("Building the Guild...") / 2, this.height / 2 + 15, Color.pink.getRGB());
       } else {
-         this.func_73731_b(this.field_73886_k, "Press exit to continue...", this.field_73880_f / 2 - this.field_73886_k.getStringWidth("Press exit to continue...") / 2, this.field_73881_g / 2 + 15, Color.pink.getRGB());
+         this.drawString(this.fontRendererObj, "Press exit to continue...", this.width / 2 - fontRendererObj.getStringWidth("Press exit to continue...") / 2, this.height / 2 + 15, Color.pink.getRGB());
       }
 
-      super.func_73863_a(i, j, f);
+      super.drawScreen(i, j, f);
    }
 
-   protected void func_73869_a(char par1, int par2) {
-      if(par2 == 1 || par2 == this.field_73882_e.gameSettings.keyBindInventory.keyCode) {
-         this.field_73882_e.thePlayer.closeScreen();
+   protected void keyTyped(char par1, int par2) {
+      if(par2 == 1 || par2 == this.mc.gameSettings.keyBindInventory.getKeyCode()) {
+         this.mc.thePlayer.closeScreen();
       }
 
    }

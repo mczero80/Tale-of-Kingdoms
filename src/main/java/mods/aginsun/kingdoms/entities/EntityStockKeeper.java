@@ -4,38 +4,37 @@ import mods.aginsun.kingdoms.client.guis.GuiStockList;
 import mods.aginsun.kingdoms.entities.api.EntityNPC;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.src.ModLoader;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
-public class EntityStockKeeper extends EntityNPC {
+public final class EntityStockKeeper extends EntityNPC {
 
-   private World field_70170_p;
+   private World world;
 
 
    public EntityStockKeeper(World world) {
-      super(world, (ItemStack)null, 100.0F);
-      this.field_70170_p = world;
-      this.field_70178_ae = false;
+      super(world, null, 100.0F);
+      this.world = world;
+      this.isImmuneToFire = false;
    }
 
-   public boolean func_70104_M() {
+   public boolean canBePushed() {
       return false;
    }
 
-   protected boolean func_70780_i() {
+   protected boolean isMovementCeased() {
       return true;
    }
 
-   public boolean func_70085_c(EntityPlayer entityplayer) {
+   public boolean interact(EntityPlayer entityplayer) {
       if(this.canInteractWith(entityplayer)) {
-         this.func_70691_i(100.0F);
-         Minecraft minecraft = ModLoader.getMinecraftInstance();
-         if(!this.field_70170_p.isRemote) {
-            entityplayer.addChatMessage("Stock Keeper: Here is my stock for today!");
+         this.heal(100.0F);
+         Minecraft minecraft = Minecraft.getMinecraft();
+         if(!this.world.isRemote) {
+            entityplayer.addChatMessage(new ChatComponentText("Stock Keeper: Here is my stock for today!"));
          }
 
-         minecraft.displayGuiScreen(new GuiStockList(entityplayer, this.field_70170_p));
+         minecraft.displayGuiScreen(new GuiStockList(entityplayer, this.world));
       }
 
       return true;

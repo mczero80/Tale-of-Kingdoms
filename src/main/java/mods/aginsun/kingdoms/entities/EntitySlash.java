@@ -41,10 +41,10 @@ public class EntitySlash extends EntityBlaze {
       return 1.0F;
    }
 
-   public void func_70071_h_() {
+   public void onUpdate() {
       this.counter += this.speed;
       if(this.counter > 200) {
-         this.func_70106_y();
+         this.setDead();
       }
 
       if(this.counter % 2 == 0 && this.explode && this.speed != 200) {
@@ -68,7 +68,7 @@ public class EntitySlash extends EntityBlaze {
 
    }
 
-   protected void func_70785_a(Entity entity, float f) {}
+   protected void attackEntity(Entity entity, float f) {}
 
    protected void func_70069_a(float f) {}
 

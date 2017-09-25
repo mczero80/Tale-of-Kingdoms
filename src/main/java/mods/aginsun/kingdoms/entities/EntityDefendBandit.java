@@ -18,6 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.src.ModLoader;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -84,16 +85,16 @@ public class EntityDefendBandit extends EntityNPC {
       this.player = entityplayer;
       if(!this.follow) {
          this.follow = true;
-         if(!this.field_70170_p.isRemote) {
-            entityplayer.addChatMessage("Bandit: I will follow you.");
+         if(!this.world.isRemote) {
+            entityplayer.addChatMessage(new ChatComponentText("Bandit: I will follow you."));
          }
 
          this.defend.func_70106_y();
          this.createdMarker = false;
       } else {
          this.follow = false;
-         if(!this.field_70170_p.isRemote) {
-            entityplayer.addChatMessage("Bandit:I will guard this area.");
+         if(!this.world.isRemote) {
+            entityplayer.addChatMessage(new ChatComponentText("Bandit: I will guard this area."));
          }
       }
 

@@ -68,7 +68,7 @@ public class GuiShopList extends GuiScreen {
    }
 
    public void func_73866_w_() {
-      this.field_73887_h.clear();
+      this.buttonList.clear();
       Item item16;
       String s15;
       if(this.item[1] != null) {
@@ -577,13 +577,13 @@ public class GuiShopList extends GuiScreen {
       }
 
       if(guibutton.id == 19) {
-         this.field_73882_e.displayGuiScreen((GuiScreen)null);
+         this.mc.displayGuiScreen((GuiScreen)null);
          this.goldchecker = false;
       }
 
       if(guibutton.id == 20) {
-         this.field_73882_e.displayGuiScreen((GuiScreen)null);
-         this.entityplayer.openGui(TaleOfKingdoms.instance, 1, this.worldObj, (int)this.entityplayer.field_70165_t, (int)this.entityplayer.field_70163_u, (int)this.entityplayer.field_70161_v);
+         this.mc.displayGuiScreen((GuiScreen)null);
+         this.entityplayer.openGui(TaleOfKingdoms.instance, 1, this.worldObj, (int)this.entityplayer.posX, (int)this.entityplayer.posY, (int)this.entityplayer.posZ);
          this.goldchecker = false;
       }
 
@@ -615,8 +615,8 @@ public class GuiShopList extends GuiScreen {
       short var9 = 255;
       short var11 = 255;
       ResourceLocation var14 = new ResourceLocation("taleofkingdoms", "textures/guis/crafting.png");
-      this.field_73882_e.renderEngine.bindTexture(var14);
-      j1 = (this.field_73880_f - var9) / 2;
+      this.mc.renderEngine.bindTexture(var14);
+      j1 = (this.width - var9) / 2;
       this.func_73729_b(j1, 0, 0, 0, var9, var11);
 
       for(int var10 = 0; var10 < this.field_73887_h.size(); ++var10) {
@@ -631,19 +631,19 @@ public class GuiShopList extends GuiScreen {
          }
       }
 
-      this.func_73732_a(this.field_73886_k, "Shop Menu - Total Money: " + GoldKeeper.getGoldTotal() + " Gold Coins", this.field_73880_f / 2, 15, 16763904);
+      this.drawString(this.fontRendererObj, "Shop Menu - Total Money: " + GoldKeeper.getGoldTotal() + " Gold Coins", this.width / 2, 15, 16763904);
       if(this.goldchecker) {
-         this.func_73732_a(this.field_73886_k, "Selected Item Cost: " + this.stringoutput + " - NOT ENOUGH GOLD", this.field_73880_f / 2, 30, 16763904);
+         this.drawString(this.fontRendererObj, "Selected Item Cost: " + this.stringoutput + " - NOT ENOUGH GOLD", this.width / 2, 30, 16763904);
       } else {
-         this.func_73732_a(this.field_73886_k, "Selected Item Cost: " + this.stringoutput + " - " + this.price + " Gold coins", this.field_73880_f / 2, 30, 16763904);
+         this.drawString(this.fontRendererObj, "Selected Item Cost: " + this.stringoutput + " - " + this.price + " Gold coins", this.width / 2, 30, 16763904);
       }
 
       super.drawScreen(i, j, f);
    }
 
-   protected void func_73869_a(char par1, int par2) {
-      if(par2 == 1 || par2 == this.field_73882_e.gameSettings.keyBindInventory.keyCode) {
-         this.field_73882_e.thePlayer.closeScreen();
+   protected void keyTyped(char par1, int par2) {
+      if(par2 == 1 || par2 == this.mc.gameSettings.keyBindInventory.getKeyCode()) {
+         this.mc.thePlayer.closeScreen();
       }
 
    }

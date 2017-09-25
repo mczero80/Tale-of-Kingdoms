@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -16,7 +17,7 @@ import net.minecraft.world.World;
 
 public class EntityReficulGuardian extends EntityNPC {
 
-   private static ItemStack defaultHeldItem = new ItemStack(Item.bow, 1);
+   private static ItemStack defaultHeldItem = new ItemStack(Items.bow, 1);
    private EntityPlayer player;
    private boolean playerPresence = true;
    private Random field_70146_Z = new Random();

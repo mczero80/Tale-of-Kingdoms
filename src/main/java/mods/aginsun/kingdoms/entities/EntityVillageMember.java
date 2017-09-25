@@ -8,8 +8,10 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
@@ -31,30 +33,30 @@ public class EntityVillageMember extends EntityNPC {
 
    public boolean func_70085_c(EntityPlayer entityplayer) {
       ItemStack itemstack = entityplayer.inventory.getCurrentItem();
-      if(itemstack != null && !this.hasAxe && (itemstack.itemID == 271 || itemstack.itemID == 275 || itemstack.itemID == 258)) {
+      if(itemstack != null && !this.hasAxe && (itemstack.getItem() == Items.wooden_axe || itemstack.getItem() == Items.stone_axe || itemstack.getItem() == Items.iron_axe)) {
          entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, (ItemStack)null);
          this.hasAxe = true;
       }
 
-      if(itemstack != null && !this.hasPick && (itemstack.itemID == 257 || itemstack.itemID == 270 || itemstack.itemID == 274)) {
+      if(itemstack != null && !this.hasPick && (itemstack.getItem() == Items.iron_pickaxe || itemstack.getItem() == Items.wooden_pickaxe || itemstack.getItem() == Items.stone_pickaxe)) {
          entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, (ItemStack)null);
          this.hasPick = true;
       }
 
       if(!this.hasPick && !this.hasAxe && !super.world.isRemote) {
-         entityplayer.addChatMessage("Villager: My king! Do you need a worker? Give me an axe and a pickaxe and I will work for you.");
+         entityplayer.addChatMessage(new ChatComponentText("Villager: My king! Do you need a worker? Give me an axe and a pickaxe and I will work for you."));
       }
 
       if(!this.hasPick && this.hasAxe && !super.world.isRemote) {
-         entityplayer.addChatMessage("Villager: I still need a pickaxe sir.");
+         entityplayer.addChatMessage(new ChatComponentText("Villager: I still need a pickaxe sir."));
       }
 
       if(this.hasPick && !this.hasAxe && !super.world.isRemote) {
-         entityplayer.addChatMessage("Villager: I still need an axe sir.");
+         entityplayer.addChatMessage(new ChatComponentText("Villager: I still need an axe sir."));
       }
 
       if(this.hasPick && this.hasAxe && !super.world.isRemote) {
-         entityplayer.addChatMessage("Worker: I am now a worker sir! Lead the way!");
+         entityplayer.addChatMessage(new ChatComponentText("Worker: I am now a worker sir! Lead the way!"));
          EntityLiving entityliving = (EntityLiving)EntityList.createEntityByName("WorkerMember", this.field_70170_p);
          entityliving.func_70012_b(this.field_70165_t, this.field_70163_u, this.field_70161_v, 0.0F, 0.0F);
          this.field_70170_p.spawnEntityInWorld(entityliving);

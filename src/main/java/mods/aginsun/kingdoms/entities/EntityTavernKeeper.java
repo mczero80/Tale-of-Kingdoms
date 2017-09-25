@@ -4,37 +4,36 @@ import mods.aginsun.kingdoms.client.guis.GuiTavernGame;
 import mods.aginsun.kingdoms.entities.api.EntityNPC;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.src.ModLoader;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
-public class EntityTavernKeeper extends EntityNPC {
+public final class EntityTavernKeeper extends EntityNPC {
 
-   private World field_70170_p;
+   private World worldObj;
 
 
    public EntityTavernKeeper(World world) {
-      super(world, (ItemStack)null, 100.0F);
-      this.field_70170_p = world;
-      this.field_70178_ae = false;
+      super(world, null, 100.0F);
+      this.worldObj = world;
+      this.isImmuneToFire = false;
    }
 
-   public boolean func_70104_M() {
+   public boolean canBePushed() {
       return false;
    }
 
-   protected boolean func_70780_i() {
+   protected boolean isMovementCeased() {
       return true;
    }
 
-   public boolean func_70085_c(EntityPlayer entityplayer) {
-      if(!this.field_70170_p.isRemote) {
-         entityplayer.addChatMessage("One-Eyed Gambler: Feeling a bit lucky eh?");
+   public boolean interact(EntityPlayer entityplayer) {
+      if(!this.world.isRemote) {
+         entityplayer.addChatMessage(new ChatComponentText("One-Eyed Gambler: Feeling a bit lucky eh?"));
       }
 
       if(this.canInteractWith(entityplayer)) {
-         Minecraft minecraft = ModLoader.getMinecraftInstance();
-         minecraft.displayGuiScreen(new GuiTavernGame(entityplayer, this.field_70170_p));
+         Minecraft minecraft = Minecraft.getMinecraft();
+         minecraft.displayGuiScreen(new GuiTavernGame(entityplayer, this.worldObj));
       }
 
       return true;

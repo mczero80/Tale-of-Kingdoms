@@ -10,6 +10,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathEntity;
@@ -21,7 +22,7 @@ import net.minecraft.world.World;
 
 public class EntityGuildMaster extends EntityNPC {
 
-   private World field_70170_p;
+   private World world;
    private EntityPlayer player;
    private int talk;
    private int counterHeal;
@@ -33,13 +34,13 @@ public class EntityGuildMaster extends EntityNPC {
 
 
    public EntityGuildMaster(World world) {
-      super(world, new ItemStack(Item.swordIron, 1), 100.0F);
+      super(world, new ItemStack(Items.iron_sword, 1), 100.0F);
       this.field_70146_Z = new Random();
       this.talk = 0;
       this.counterHeal = 0;
       this.get = true;
       this.said = false;
-      this.field_70170_p = world;
+      this.world = world;
       this.field_70178_ae = true;
       this.attackStrength = 10;
    }
@@ -52,9 +53,9 @@ public class EntityGuildMaster extends EntityNPC {
       this.player = entityplayer;
       boolean flag = false;
       int j;
-      if(!this.field_70170_p.loadedEntityList.isEmpty()) {
-         for(j = 0; j < this.field_70170_p.loadedEntityList.size(); ++j) {
-            Entity k = (Entity)this.field_70170_p.loadedEntityList.get(j);
+      if(!this.world.loadedEntityList.isEmpty()) {
+         for(j = 0; j < this.world.loadedEntityList.size(); ++j) {
+            Entity k = (Entity)this.world.loadedEntityList.get(j);
             if(k instanceof EntityReficulGuardian && k.getDistanceSqToEntity(this) <= 2000.0D) {
                flag = true;
             }
@@ -69,9 +70,9 @@ public class EntityGuildMaster extends EntityNPC {
          }
       }
 
-      j = this.field_70170_p.getWorldInfo().getSpawnX() + 30;
-      int var12 = this.field_70170_p.getWorldInfo().getSpawnY();
-      int l = this.field_70170_p.getWorldInfo().getSpawnZ() + 40;
+      j = this.world.getWorldInfo().getSpawnX() + 30;
+      int var12 = this.world.getWorldInfo().getSpawnY();
+      int l = this.world.getWorldInfo().getSpawnZ() + 40;
       int i1 = (int)this.field_70165_t;
       int j1 = (int)this.field_70163_u;
       int k1 = (int)this.field_70161_v;
@@ -79,7 +80,7 @@ public class EntityGuildMaster extends EntityNPC {
          if(j - 50 < i1 && j + 50 > i1 && var12 - 50 < j1 && var12 + 50 > j1 && l - 50 < k1 && l + 50 > k1) {
             if(flag && !UtilToK.guildFightEnded) {
                if(this.talk == 0) {
-                  if(!this.field_70170_p.isRemote) {
+                  if(!this.world.isRemote) {
                      this.player.addChatMessage("Guild Master: My apprentice! The guild is under attack, and I came here to ask for your help. Please let us hurry back to the guild!");
                   }
 
@@ -88,7 +89,7 @@ public class EntityGuildMaster extends EntityNPC {
                   this.player.joinEntityItemWithWorld(var14);
                } else if(this.talk > 2 && this.talk < 5 && !this.field_70170_p.isRemote) {
                   this.player.addChatMessage("Master: Keep close and I will heal you.");
-               } else if(!this.field_70170_p.isRemote) {
+               } else if(!this.world.isRemote) {
                   this.player.addChatMessage("Master: Lets take this bastards down. There are still some left.");
                }
 
@@ -110,15 +111,15 @@ public class EntityGuildMaster extends EntityNPC {
 
                if(!this.get && !this.field_70170_p.isRemote) {
                   this.player.addChatMessage("Master: We have now supplies to build the guild. Talk to me again if you want to repair the guild.");
-               } else if(!this.field_70170_p.isRemote) {
+               } else if(!this.world.isRemote) {
                   this.player.addChatMessage("Master: We did the best we could. Now, we should rebuild the guild and gather 64 wood while the rest do some cleanup and construction.");
                }
             }
-         } else if(!this.field_70170_p.isRemote) {
+         } else if(!this.world.isRemote) {
             this.player.addChatMessage("Master: We are too far from the guild!");
          }
       } else {
-         if(!this.field_70170_p.isRemote) {
+         if(!this.world.isRemote) {
             this.player.addChatMessage("Master: Thank you hero, you have proven yourself a worthy leader but your quest for kingship is not over. I will be back at the guild and may you continue this good progress.");
          }
 

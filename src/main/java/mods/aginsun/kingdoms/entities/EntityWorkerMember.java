@@ -9,10 +9,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.src.ModLoader;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -45,7 +47,7 @@ public class EntityWorkerMember extends EntityNPC {
       this.marker2 = null;
       this.field_70170_p = world;
       this.field_70178_ae = false;
-      Minecraft minecraft = ModLoader.getMinecraftInstance();
+      Minecraft minecraft = Minecraft.getMinecraft();
       this.player = minecraft.thePlayer;
    }
 
@@ -110,23 +112,23 @@ public class EntityWorkerMember extends EntityNPC {
          }
 
          if(this.follow && flag && this.worktype == 1 && !this.field_70170_p.isRemote) {
-            this.player.addChatMessage("Worker: Chopping it down sir!");
+            this.player.addChatMessage(new ChatComponentText("Worker: Chopping it down sir!"));
          }
 
          if(this.follow && !flag && this.worktype == 1 && !this.field_70170_p.isRemote) {
-            this.player.addChatMessage("Worker: Direct me to a tree and I will start cutting!");
+            this.player.addChatMessage(new ChatComponentText("Worker: Direct me to a tree and I will start cutting!"));
          }
 
          this.player = entityplayer;
       }
 
       if(this.worktype == 2 && !this.isMining) {
-         if(this.field_70163_u < 50.0D && !this.field_70170_p.isRemote) {
-            this.player.addChatMessage("Worker: Mining the stone sir!");
+         if(this.field_70163_u < 50.0D && !this.world.isRemote) {
+            this.player.addChatMessage(new ChatComponentText("Worker: Mining the stone sir!"));
             this.createMine();
             this.isMining = true;
-         } else if(!this.field_70170_p.isRemote) {
-            this.player.addChatMessage("Worker: We must go further underground sir!");
+         } else if(!this.world.isRemote) {
+            this.player.addChatMessage(new ChatComponentText("Worker: We must go further underground sir!"));
          }
       }
 
@@ -258,7 +260,7 @@ public class EntityWorkerMember extends EntityNPC {
          defaultHeldItem = null;
          this.follow = false;
          this.worktype = 0;
-         Minecraft minecraft = ModLoader.getMinecraftInstance();
+         Minecraft minecraft = Minecraft.getMinecraft();
          minecraft.displayGuiScreen(new GuiWorker((EntityPlayer)entity, this.field_70170_p, this));
       }
 
@@ -275,74 +277,74 @@ public class EntityWorkerMember extends EntityNPC {
       for(i1 = 0; i1 < 5; ++i1) {
          for(k1 = 0; k1 < 3; ++k1) {
             for(int l1 = 1; l1 < 5; ++l1) {
-               this.field_70170_p.setBlock(i + i1, j + k1, k + l1, 0);
+               this.field_70170_p.setBlock(i + i1, j + k1, k + l1, Blocks.air);
             }
          }
       }
 
       for(i1 = 1; i1 < 5; ++i1) {
          for(k1 = 1; k1 < 7; ++k1) {
-            this.field_70170_p.setBlock(i + i1, j - 2, k + k1, 1);
-            this.field_70170_p.setBlock(i + i1, j - 1, k + k1, 13);
+            this.field_70170_p.setBlock(i + i1, j - 2, k + k1, Blocks.stone);
+            this.field_70170_p.setBlock(i + i1, j - 1, k + k1, Blocks.gravel);
          }
       }
 
-      this.field_70170_p.setBlock(i + 1, j + 0, k + 1, 1);
-      this.field_70170_p.setBlock(i + 1, j + 0, k + 2, 85);
-      this.field_70170_p.setBlock(i + 1, j + 0, k + 5, 85);
-      this.field_70170_p.setBlock(i + 1, j + 0, k + 6, 4);
-      this.field_70170_p.setBlock(i + 1, j + 1, k + 1, 4);
-      this.field_70170_p.setBlock(i + 1, j + 1, k + 2, 85);
-      this.field_70170_p.setBlock(i + 1, j + 1, k + 5, 85);
-      this.field_70170_p.setBlock(i + 1, j + 1, k + 6, 1);
-      this.field_70170_p.setBlock(i + 1, j + 2, k + 1, 1);
-      this.field_70170_p.setBlock(i + 1, j + 2, k + 2, 5);
-      this.field_70170_p.setBlock(i + 1, j + 2, k + 3, 5);
-      this.field_70170_p.setBlock(i + 1, j + 2, k + 4, 5);
-      this.field_70170_p.setBlock(i + 1, j + 2, k + 5, 5);
-      this.field_70170_p.setBlock(i + 1, j + 2, k + 6, 1);
-      this.field_70170_p.setBlock(i + 1, j + 3, k + 2, 4);
-      this.field_70170_p.setBlock(i + 1, j + 3, k + 3, 4);
-      this.field_70170_p.setBlock(i + 1, j + 3, k + 4, 1);
-      this.field_70170_p.setBlock(i + 1, j + 3, k + 5, 4);
-      this.field_70170_p.setBlock(i + 2, j + 0, k + 1, 4);
-      this.field_70170_p.setBlock(i + 2, j + 0, k + 2, 58);
-      this.field_70170_p.setBlock(i + 2, j + 0, k + 6, 4);
-      this.field_70170_p.setBlock(i + 2, j + 1, k + 1, 1);
-      this.field_70170_p.setBlock(i + 2, j + 1, k + 6, 1);
-      this.field_70170_p.setBlock(i + 2, j + 2, k + 1, 4);
-      this.field_70170_p.setBlock(i + 2, j + 2, k + 6, 4);
-      this.field_70170_p.setBlock(i + 2, j + 3, k + 2, 4);
-      this.field_70170_p.setBlock(i + 2, j + 3, k + 3, 1);
-      this.field_70170_p.setBlock(i + 2, j + 3, k + 4, 4);
-      this.field_70170_p.setBlock(i + 2, j + 3, k + 5, 4);
-      this.field_70170_p.setBlock(i + 3, j + 0, k + 1, 1);
-      this.field_70170_p.setBlock(i + 3, j + 0, k + 5, 4);
-      this.field_70170_p.setBlock(i + 3, j + 0, k + 6, 1);
-      this.field_70170_p.setBlock(i + 3, j + 1, k + 1, 4);
-      this.field_70170_p.setBlock(i + 3, j + 1, k + 6, 4);
-      this.field_70170_p.setBlock(i + 3, j + 2, k + 1, 1);
-      this.field_70170_p.setBlock(i + 3, j + 2, k + 6, 1);
-      this.field_70170_p.setBlock(i + 3, j + 3, k + 2, 1);
-      this.field_70170_p.setBlock(i + 3, j + 3, k + 3, 4);
-      this.field_70170_p.setBlock(i + 3, j + 3, k + 4, 4);
-      this.field_70170_p.setBlock(i + 3, j + 3, k + 5, 1);
-      this.field_70170_p.setBlock(i + 4, j + 0, k + 1, 1);
-      this.field_70170_p.setBlock(i + 4, j + 0, k + 2, 4);
-      this.field_70170_p.setBlock(i + 4, j + 0, k + 6, 1);
-      this.field_70170_p.setBlock(i + 4, j + 1, k + 1, 4);
-      this.field_70170_p.setBlock(i + 4, j + 1, k + 6, 1);
-      this.field_70170_p.setBlock(i + 4, j + 2, k + 1, 1);
-      this.field_70170_p.setBlock(i + 4, j + 2, k + 6, 4);
-      this.field_70170_p.setBlock(i + 4, j + 3, k + 2, 1);
-      this.field_70170_p.setBlock(i + 4, j + 3, k + 3, 1);
-      this.field_70170_p.setBlock(i + 4, j + 3, k + 4, 4);
-      this.field_70170_p.setBlock(i + 4, j + 3, k + 5, 1);
+      this.field_70170_p.setBlock(i + 1, j, k + 1, Blocks.stone);
+      this.field_70170_p.setBlock(i + 1, j, k + 2, Blocks.fence);
+      this.field_70170_p.setBlock(i + 1, j, k + 5, Blocks.fence);
+      this.field_70170_p.setBlock(i + 1, j, k + 6, Blocks.cobblestone);
+      this.field_70170_p.setBlock(i + 1, j + 1, k + 1, Blocks.cobblestone);
+      this.field_70170_p.setBlock(i + 1, j + 1, k + 2, Blocks.fence);
+      this.field_70170_p.setBlock(i + 1, j + 1, k + 5, Blocks.fence);
+      this.field_70170_p.setBlock(i + 1, j + 1, k + 6, Blocks.stone);
+      this.field_70170_p.setBlock(i + 1, j + 2, k + 1, Blocks.stone);
+      this.field_70170_p.setBlock(i + 1, j + 2, k + 2, Blocks.planks);
+      this.field_70170_p.setBlock(i + 1, j + 2, k + 3, Blocks.planks);
+      this.field_70170_p.setBlock(i + 1, j + 2, k + 4, Blocks.planks);
+      this.field_70170_p.setBlock(i + 1, j + 2, k + 5, Blocks.planks);
+      this.field_70170_p.setBlock(i + 1, j + 2, k + 6, Blocks.stone);
+      this.field_70170_p.setBlock(i + 1, j + 3, k + 2, Blocks.cobblestone);
+      this.field_70170_p.setBlock(i + 1, j + 3, k + 3, Blocks.cobblestone);
+      this.field_70170_p.setBlock(i + 1, j + 3, k + 4, Blocks.stone);
+      this.field_70170_p.setBlock(i + 1, j + 3, k + 5, Blocks.cobblestone);
+      this.field_70170_p.setBlock(i + 2, j, k + 1, Blocks.cobblestone);
+      this.field_70170_p.setBlock(i + 2, j, k + 2, Blocks.crafting_table);
+      this.field_70170_p.setBlock(i + 2, j, k + 6, Blocks.cobblestone);
+      this.field_70170_p.setBlock(i + 2, j + 1, k + 1, Blocks.stone);
+      this.field_70170_p.setBlock(i + 2, j + 1, k + 6, Blocks.stone);
+      this.field_70170_p.setBlock(i + 2, j + 2, k + 1, Blocks.cobblestone);
+      this.field_70170_p.setBlock(i + 2, j + 2, k + 6, Blocks.cobblestone);
+      this.field_70170_p.setBlock(i + 2, j + 3, k + 2, Blocks.cobblestone);
+      this.field_70170_p.setBlock(i + 2, j + 3, k + 3, Blocks.stone);
+      this.field_70170_p.setBlock(i + 2, j + 3, k + 4, Blocks.cobblestone);
+      this.field_70170_p.setBlock(i + 2, j + 3, k + 5, Blocks.cobblestone);
+      this.field_70170_p.setBlock(i + 3, j, k + 1, Blocks.stone);
+      this.field_70170_p.setBlock(i + 3, j, k + 5, Blocks.cobblestone);
+      this.field_70170_p.setBlock(i + 3, j, k + 6, Blocks.stone);
+      this.field_70170_p.setBlock(i + 3, j + 1, k + 1, Blocks.cobblestone);
+      this.field_70170_p.setBlock(i + 3, j + 1, k + 6, Blocks.cobblestone);
+      this.field_70170_p.setBlock(i + 3, j + 2, k + 1, Blocks.stone);
+      this.field_70170_p.setBlock(i + 3, j + 2, k + 6, Blocks.stone);
+      this.field_70170_p.setBlock(i + 3, j + 3, k + 2, Blocks.stone);
+      this.field_70170_p.setBlock(i + 3, j + 3, k + 3, Blocks.cobblestone);
+      this.field_70170_p.setBlock(i + 3, j + 3, k + 4, Blocks.cobblestone);
+      this.field_70170_p.setBlock(i + 3, j + 3, k + 5, Blocks.stone);
+      this.field_70170_p.setBlock(i + 4, j, k + 1, Blocks.stone);
+      this.field_70170_p.setBlock(i + 4, j, k + 2, Blocks.cobblestone);
+      this.field_70170_p.setBlock(i + 4, j, k + 6, Blocks.stone);
+      this.field_70170_p.setBlock(i + 4, j + 1, k + 1, Blocks.cobblestone);
+      this.field_70170_p.setBlock(i + 4, j + 1, k + 6, Blocks.stone);
+      this.field_70170_p.setBlock(i + 4, j + 2, k + 1, Blocks.stone);
+      this.field_70170_p.setBlock(i + 4, j + 2, k + 6, Blocks.cobblestone);
+      this.field_70170_p.setBlock(i + 4, j + 3, k + 2, Blocks.stone);
+      this.field_70170_p.setBlock(i + 4, j + 3, k + 3, Blocks.stone);
+      this.field_70170_p.setBlock(i + 4, j + 3, k + 4, Blocks.cobblestone);
+      this.field_70170_p.setBlock(i + 4, j + 3, k + 5, Blocks.stone);
       this.field_70170_p.setBlockMetadataWithNotify(i + 3, j + 2, k + 2, 50, 3);
       this.marker2 = EntityList.createEntityByName("Marker2", this.field_70170_p);
       this.marker2.setLocationAndAngles((double)(i + 4), (double)(j + 1), (double)(k + 3), 0.0F, 0.0F);
-      if(!this.field_70170_p.isRemote) {
-         this.field_70170_p.spawnEntityInWorld(this.marker2);
+      if(!this.world.isRemote) {
+         this.world.spawnEntityInWorld(this.marker2);
       }
 
    }

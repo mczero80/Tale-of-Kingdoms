@@ -13,6 +13,7 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathEntity;
@@ -26,7 +27,7 @@ public class EntityDefendKnight extends EntityNPC {
 
    private World field_70170_p = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(0);
    private EntityPlayer player;
-   private static ItemStack defaultHeldItem = new ItemStack(Item.swordIron, 1);
+   private static ItemStack defaultHeldItem = new ItemStack(Items.iron_sword, 1);
    private int level;
    private boolean follow;
    private boolean checkPlayer;

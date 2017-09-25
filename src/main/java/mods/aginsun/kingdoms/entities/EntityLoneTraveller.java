@@ -9,15 +9,17 @@ import mods.aginsun.kingdoms.util.UtilToK;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
 public class EntityLoneTraveller extends EntityNPC {
 
    private World field_70170_p = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(0);
-   private static ItemStack defaultHeldItem = new ItemStack(Item.swordIron, 1);
+   private static ItemStack defaultHeldItem = new ItemStack(Items.iron_sword, 1);
 
 
    public EntityLoneTraveller(World world) {
@@ -45,10 +47,10 @@ public class EntityLoneTraveller extends EntityNPC {
       }
 
       if(flag1 && !this.field_70170_p.isRemote) {
-         entityplayer.addChatMessage("Survivor: My king! Thank you for saving them! I will let the guild master know your efforts");
+         entityplayer.addChatMessage(new ChatComponentText("Survivor: My king! Thank you for saving them! I will let the guild master know your efforts"));
       } else if(!this.field_70170_p.isRemote) {
-         entityplayer.addChatMessage("Survivor: I am gravely lost, my king. I survived the attack but many of our villages burned down. There are still survivors left, hurry and rescue them!");
-         entityplayer.addChatMessage("Guild Master: Your quest has started, find the village and save them!");
+         entityplayer.addChatMessage(new ChatComponentText("Survivor: I am gravely lost, my king. I survived the attack but many of our villages burned down. There are still survivors left, hurry and rescue them!"));
+         entityplayer.addChatMessage(new ChatComponentText("Guild Master: Your quest has started, find the village and save them!"));
       }
 
       UtilToK.burningVillages = 1;

@@ -14,12 +14,14 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.potion.Potion;
 import net.minecraft.src.ModLoader;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
@@ -28,7 +30,7 @@ public class EntityDefendWarrior extends EntityNPC {
    private World field_70170_p;
    private Random field_70146_Z = new Random();
    private EntityPlayer player;
-   private static ItemStack defaultHeldItem = new ItemStack(Item.swordIron, 1);
+   private static ItemStack defaultHeldItem = new ItemStack(Items.iron_sword, 1);
    private int level;
    private boolean follow;
    private boolean checkPlayer;
@@ -75,7 +77,7 @@ public class EntityDefendWarrior extends EntityNPC {
 
    public void func_70636_d() {
       super.func_70636_d();
-      Minecraft minecraft = ModLoader.getMinecraftInstance();
+      Minecraft minecraft = Minecraft.getMinecraft();
       EntityClientPlayerMP entityplayersp = minecraft.thePlayer;
       float f1;
       PathEntity pathentity1;
@@ -92,7 +94,6 @@ public class EntityDefendWarrior extends EntityNPC {
          }
       } else {
          if(!this.createdMarker) {
-            System.out.println("Defend Location");
             this.defend = (EntityDefendMarker)EntityList.createEntityByName("DefendMark", this.field_70170_p);
             this.defend.func_70012_b(this.field_70165_t, this.field_70163_u, this.field_70161_v, 0.0F, 0.0F);
             this.field_70170_p.spawnEntityInWorld(this.defend);
@@ -118,7 +119,7 @@ public class EntityDefendWarrior extends EntityNPC {
       if(!this.follow) {
          this.follow = true;
          if(!this.field_70170_p.isRemote) {
-            entityplayer.addChatMessage("Warrior: I will follow you.");
+            entityplayer.addChatMessage(new ChatComponentText("Warrior: I will follow you."));
          }
 
          this.defend.func_70106_y();
@@ -126,7 +127,7 @@ public class EntityDefendWarrior extends EntityNPC {
       } else {
          this.follow = false;
          if(!this.field_70170_p.isRemote) {
-            entityplayer.addChatMessage("Warrior:I will guard this area.");
+            entityplayer.addChatMessage(new ChatComponentText("Warrior: I will guard this area."));
          }
       }
 

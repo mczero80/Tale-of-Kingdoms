@@ -5,6 +5,7 @@ import mods.aginsun.kingdoms.entities.api.EntityNPC;
 import mods.aginsun.kingdoms.handlers.GoldKeeper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemFood;
@@ -39,8 +40,8 @@ public class EntityWeaponKeeper extends EntityNPC {
 
    public boolean func_70085_c(EntityPlayer entityplayer) {
       if(this.canInteractWith(entityplayer)) {
-         this.func_70691_i(100.0F);
-         Minecraft minecraft = ModLoader.getMinecraftInstance();
+         this.heal(100.0F);
+         Minecraft minecraft = Minecraft.getMinecraft();
          int i = 0;
          int j = 0;
          String s = "";
@@ -78,17 +79,17 @@ public class EntityWeaponKeeper extends EntityNPC {
 
                String s1 = item.getUnlocalizedName() + ".name";
                String s2 = this.st.translateKey(s1);
-               int l = itemstack.itemID;
-               if(l == 261 || l == 262) {
+               Item l = itemstack.getItem();
+               if(l == Items.bow || l == Items.arrow) {
                   flag3 = false;
                }
 
-               if(l == 26 || l == 34 || l == 36 || l == 43 || l == 51 || l == 52 || l == 55 || l == 59 || l == 60 || l == 62 || l == 63 || l == 64 || l == 68 || l == 71 || l == 74 || l == 75 || l == 78 || l == 90 || l == 93 || l == 94 || l == 97 || l == 99 || l == 100 || l == 104 || l == 105 || l == 110 || l == 92 || l == 354 || l == Item.flint.itemID || l == Item.clay.itemID || l == Item.ingotIron.itemID || l == Item.diamond.itemID || l == Item.fishRaw.itemID || l == Item.appleRed.itemID || l == Item.silk.itemID || l == Item.feather.itemID || flag2 || flag3) {
+               if(l == 26 || l == 34 || l == 36 || l == 43 || l == 51 || l == 52 || l == 55 || l == 59 || l == 60 || l == 62 || l == 63 || l == 64 || l == 68 || l == 71 || l == 74 || l == 75 || l == 78 || l == 90 || l == 93 || l == 94 || l == 97 || l == 99 || l == 100 || l == 104 || l == 105 || l == 110 || l == 92 || l == 354 || l == Items.flint || l == Items.clay_ball || l == Items.iron_ingot || l == Items.diamond || l == Items.fishing_rod || l == Items.apple || l == Items.string || l == Items.feather || flag2 || flag3) {
                   j = 0;
                }
 
                if(j > 0 && !s1.equals("null.name") && !s1.equals(s2)) {
-                  this.itemget[i] = Integer.valueOf(itemstack.itemID);
+                  this.itemget[i] = Integer.valueOf(itemstack.getItem());
                   ++i;
                }
             }

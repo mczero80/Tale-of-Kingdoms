@@ -1,25 +1,20 @@
 package mods.aginsun.kingdoms.client.guis;
 
-import mods.aginsun.kingdoms.client.guis.GuiButtonShop;
-import mods.aginsun.kingdoms.client.guis.GuiPriceBar;
-import mods.aginsun.kingdoms.client.guis.GuiScreenToK;
 import mods.aginsun.kingdoms.handlers.GoldKeeper;
 import mods.aginsun.kingdoms.handlers.ResourceHandler;
 import mods.aginsun.kingdoms.handlers.SchematicHandler;
 import mods.aginsun.kingdoms.handlers.SchematicRegistry;
 import mods.aginsun.kingdoms.util.Buildings;
 import mods.aginsun.kingdoms.util.UtilToK;
-import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
-public class GuiBuildScreen extends GuiScreenToK {
+public final class GuiBuildScreen extends GuiScreenToK {
 
    private World worldObj;
    private String x = "Build ";
@@ -219,13 +214,13 @@ public class GuiBuildScreen extends GuiScreenToK {
       } else {
          int j;
          if(guibutton.id == 2) {
-            j = this.mc.thePlayer.inventory.getInventorySlotContainItem(Blocks.log);
+            j = this.mc.thePlayer.inventory.getSizeInventory();
             if(j >= 0 && this.mc.thePlayer.inventory.getStackInSlot(j).stackSize == 64) {
                this.mc.thePlayer.inventory.setInventorySlotContents(j, (ItemStack)null);
                ResourceHandler.getInstance().addwoodResource(64);
             }
          } else if(guibutton.id == 3) {
-            j = this.mc.thePlayer.inventory.getInventorySlotContainItem(Blocks.cobblestone);
+            j = this.mc.thePlayer.inventory.getSizeInventory();
             if(j >= 0 && this.mc.thePlayer.inventory.getStackInSlot(j).stackSize == 64) {
                this.mc.thePlayer.inventory.setInventorySlotContents(j, (ItemStack)null);
                ResourceHandler.getInstance().addcobbleResource(64);

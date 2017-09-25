@@ -13,12 +13,14 @@ import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.potion.Potion;
 import net.minecraft.src.ModLoader;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
@@ -27,7 +29,7 @@ public class EntityHeadCommander extends EntityNPC {
    private World field_70170_p;
    private Random field_70146_Z = new Random();
    private EntityPlayer player;
-   private static ItemStack defaultHeldItem = new ItemStack(Item.swordIron, 1);
+   private static ItemStack defaultHeldItem = new ItemStack(Items.iron_sword, 1);
    public boolean follow;
    private boolean checkPlayer;
    public boolean createdMarker;
@@ -50,7 +52,7 @@ public class EntityHeadCommander extends EntityNPC {
 
    public void func_70636_d() {
       super.func_70636_d();
-      Minecraft minecraft = ModLoader.getMinecraftInstance();
+      Minecraft minecraft = Minecraft.getMinecraft();
       EntityClientPlayerMP entityplayersp = minecraft.thePlayer;
       float f1;
       PathEntity pathentity1;
@@ -89,9 +91,9 @@ public class EntityHeadCommander extends EntityNPC {
    }
 
    public boolean func_70085_c(EntityPlayer entityplayer) {
-      Minecraft minecraft = ModLoader.getMinecraftInstance();
+      Minecraft minecraft = Minecraft.getMinecraft();
       if(!this.field_70170_p.isRemote) {
-         entityplayer.addChatMessage("Knight Commander: I will lead your troops to battle!");
+         entityplayer.addChatMessage(new ChatComponentText("Knight Commander: I will lead your troops to battle!"));
       }
 
       minecraft.displayGuiScreen(new GuiReinforcementPool(entityplayer, this.field_70170_p, this));

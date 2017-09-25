@@ -1,22 +1,22 @@
 package mods.aginsun.kingdoms.client.guis;
 
 import cpw.mods.fml.common.FMLCommonHandler;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-import mods.aginsun.kingdoms.client.guis.GuiScreenToK;
 import mods.aginsun.kingdoms.handlers.GoldKeeper;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
-public class GuiMageHall extends GuiScreenToK {
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+
+public final class GuiMageHall extends GuiScreenToK {
 
    private World worldObj = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(0);
    public EntityPlayer entityplayer;
@@ -29,13 +29,13 @@ public class GuiMageHall extends GuiScreenToK {
       this.worldObj = world;
    }
 
-   public void func_73866_w_() {
-      this.field_73887_h.clear();
-      this.field_73887_h.add(new GuiButton(2, this.field_73880_f / 2 + 90, 200, 125, 20, "Recruit a Mage"));
-      this.field_73887_h.add(new GuiButton(3, this.field_73880_f / 2 + 90, 220, 125, 20, "Exit"));
+   public void initGui() {
+      this.buttonList.clear();
+      this.buttonList.add(new GuiButton(2, this.width / 2 + 90, 200, 125, 20, "Recruit a Mage"));
+      this.buttonList.add(new GuiButton(3, this.width / 2 + 90, 220, 125, 20, "Exit"));
    }
 
-   protected void func_73875_a(GuiButton guibutton) {
+   protected void actionPerformed(GuiButton guibutton) {
       if(guibutton.id == 1) {
          ;
       }
@@ -43,7 +43,7 @@ public class GuiMageHall extends GuiScreenToK {
       if(guibutton.id == 2) {
          if(2000 <= GoldKeeper.getGoldTotal()) {
             EntityLiving itemstack = (EntityLiving)EntityList.createEntityByName("DefendMage", this.worldObj);
-            itemstack.func_70012_b(this.entityplayer.field_70165_t, this.entityplayer.field_70163_u, this.entityplayer.field_70161_v, 0.0F, 0.0F);
+            itemstack.setLocationAndAngles(this.entityplayer.posX, this.entityplayer.posY, this.entityplayer.posZ, 0.0F, 0.0F);
             this.worldObj.spawnEntityInWorld(itemstack);
             GoldKeeper.decreaseGold(2000);
          } else {
@@ -52,7 +52,7 @@ public class GuiMageHall extends GuiScreenToK {
       }
 
       if(guibutton.id == 3) {
-         this.field_73882_e.displayGuiScreen((GuiScreen)null);
+         this.mc.displayGuiScreen(null);
          this.goldchecker = false;
       }
 
@@ -79,7 +79,7 @@ public class GuiMageHall extends GuiScreenToK {
 
                GoldKeeper.decreaseGold(500);
             } else if(!this.worldObj.isRemote) {
-               this.entityplayer.addChatMessage("Head Mage: I can\'t enchant this item.");
+               this.entityplayer.addChatMessage(new ChatComponentText("Head Mage: I can\'t enchant this item."));
             }
          }
       } else {
@@ -88,26 +88,26 @@ public class GuiMageHall extends GuiScreenToK {
 
    }
 
-   public void func_73874_b() {
+   public void onGuiClosed() {
       if(!this.worldObj.isRemote) {
-         this.entityplayer.addChatMessage("Head Mage: Magic dwells in you.");
+         this.entityplayer.addChatMessage(new ChatComponentText("Head Mage: Magic dwells in you."));
       }
 
    }
 
-   public void func_73863_a(int i, int j, float f) {
-      for(int k = 0; k < this.field_73887_h.size(); ++k) {
-         GuiButton guibutton = (GuiButton)this.field_73887_h.get(k);
-         guibutton.drawButton(this.field_73882_e, i, j);
+   public void drawScreen(int i, int j, float f) {
+      for(int k = 0; k < this.buttonList.size(); ++k) {
+         GuiButton guibutton = (GuiButton)this.buttonList.get(k);
+         guibutton.drawButton(this.mc, i, j);
       }
 
-      this.func_73732_a(this.field_73886_k, "The Mage Hall Total Money: " + GoldKeeper.getGoldTotal() + " Gold Coins", this.field_73880_f / 2, 10, 16763904);
+      this.drawString(this.fontRendererObj, "The Mage Hall Total Money: " + GoldKeeper.getGoldTotal() + " Gold Coins", this.width / 2, 10, 16763904);
       if(this.goldchecker) {
-         this.func_73732_a(this.field_73886_k, "Selected Item Cost to enchant: " + this.price + " - NOT ENOUGH GOLD", this.field_73880_f / 2, 30, 16763904);
+         this.drawString(this.fontRendererObj, "Selected Item Cost to enchant: " + this.price + " - NOT ENOUGH GOLD", this.width / 2, 30, 16763904);
       } else {
-         this.func_73732_a(this.field_73886_k, "Selected Item Cost to enchant: " + this.price, this.field_73880_f / 2, 20, 16763904);
+         this.drawString(this.fontRendererObj, "Selected Item Cost to enchant: " + this.price, this.width / 2, 20, 16763904);
       }
 
-      this.func_73732_a(this.field_73886_k, "Note: Recruiting a mage cost 2000", this.field_73880_f / 2, 30, 16763904);
+      this.drawString(this.fontRendererObj, "Note: Recruiting a mage cost 2000", this.width / 2, 30, 16763904);
    }
 }

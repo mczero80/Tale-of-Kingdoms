@@ -1,7 +1,5 @@
 package mods.aginsun.kingdoms.client.guis;
 
-import mods.aginsun.kingdoms.client.guis.GuiShopList;
-import mods.aginsun.kingdoms.client.guis.GuiStockList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -9,12 +7,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public class GuiButtonShop extends GuiButton {
+public final class GuiButtonShop extends GuiButton {
 
    private GuiShopList gui;
    private GuiStockList gui2;
    private Item item;
-   private Integer itemID;
+   private Item itemID;
    protected int field_73747_a;
    protected int field_73745_b;
    public int field_73746_c;
@@ -25,11 +23,11 @@ public class GuiButtonShop extends GuiButton {
    public boolean enabled2;
 
 
-   public GuiButtonShop(Integer integer, GuiShopList guishoplist, int i, int j, int k, int l, int i1, String s) {
+   public GuiButtonShop(Item integer, GuiShopList guishoplist, int i, int j, int k, int l, int i1, String s) {
       super(i, j, k, 200, 20, s);
       this.gui = guishoplist;
       this.itemID = integer;
-      Item item1 = (new ItemStack(integer.intValue(), 1, 0)).getItem();
+      Item item1 = (new ItemStack(integer, 1, 0)).getItem();
       this.item = item1;
       this.field_73747_a = 200;
       this.field_73745_b = 20;
@@ -59,7 +57,7 @@ public class GuiButtonShop extends GuiButton {
       this.field_73744_e = s;
    }
 
-   protected int func_73738_a(boolean flag) {
+   public int getHoverState(boolean flag) {
       byte byte0 = 1;
       if(!this.field_73742_g) {
          byte0 = 0;
@@ -70,15 +68,15 @@ public class GuiButtonShop extends GuiButton {
       return byte0;
    }
 
-   public void func_73737_a(Minecraft minecraft, int i, int j) {
+   public void drawButton(Minecraft minecraft, int i, int j) {
       if(this.enabled2) {
          FontRenderer fontrenderer = minecraft.fontRenderer;
          ResourceLocation resource = new ResourceLocation("taleofkingdoms", "textures/guis/gui.png");
          minecraft.renderEngine.bindTexture(resource);
          boolean flag = i >= this.field_73746_c && j >= this.field_73743_d && i < this.field_73746_c + this.field_73747_a && j < this.field_73743_d + this.field_73745_b;
-         int k = this.func_73738_a(flag);
+         int k = this.getHoverState(flag);
          if(this.gui != null) {
-            if(this.gui.itemSelected == this.itemID) {
+            if(this.itemID != null) {
                k = 2;
             } else {
                k = 1;
@@ -93,15 +91,15 @@ public class GuiButtonShop extends GuiButton {
             }
          }
 
-         this.func_73729_b(this.field_73746_c, this.field_73743_d, 0, 46 + k * 20, this.field_73747_a / 2, this.field_73745_b);
-         this.func_73729_b(this.field_73746_c + this.field_73747_a / 2, this.field_73743_d, 200 - this.field_73747_a / 2, 46 + k * 20, this.field_73747_a / 2, this.field_73745_b);
-         this.func_73739_b(minecraft, i, j);
+         this.drawTexturedModalRect(this.field_73746_c, this.field_73743_d, 0, 46 + k * 20, this.field_73747_a / 2, this.field_73745_b);
+         this.drawTexturedModalRect(this.field_73746_c + this.field_73747_a / 2, this.field_73743_d, 200 - this.field_73747_a / 2, 46 + k * 20, this.field_73747_a / 2, this.field_73745_b);
+         this.mouseDragged(minecraft, i, j);
          if(!this.field_73742_g) {
-            this.func_73732_a(fontrenderer, this.field_73744_e, this.field_73746_c + this.field_73747_a / 2 - 20, this.field_73743_d + (this.field_73745_b - 8) / 2, -13312);
+            this.drawString(fontrenderer, this.field_73744_e, this.field_73746_c + this.field_73747_a / 2 - 20, this.field_73743_d + (this.field_73745_b - 8) / 2, -13312);
          } else if(!flag) {
-            this.func_73732_a(fontrenderer, this.field_73744_e, this.field_73746_c + this.field_73747_a / 2 - 20, this.field_73743_d + (this.field_73745_b - 8) / 2, 16777215);
+            this.drawString(fontrenderer, this.field_73744_e, this.field_73746_c + this.field_73747_a / 2 - 20, this.field_73743_d + (this.field_73745_b - 8) / 2, 16777215);
          } else {
-            this.func_73732_a(fontrenderer, this.field_73744_e, this.field_73746_c + this.field_73747_a / 2 - 20, this.field_73743_d + (this.field_73745_b - 8) / 2, '\ucc00');
+            this.drawString(fontrenderer, this.field_73744_e, this.field_73746_c + this.field_73747_a / 2 - 20, this.field_73743_d + (this.field_73745_b - 8) / 2, '\ucc00');
          }
 
       }

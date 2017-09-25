@@ -23,7 +23,7 @@ public class EntityShopKeeper extends EntityNPC {
 
 
    public EntityShopKeeper(World world) {
-      super(world, (ItemStack)null, 100.0F);
+      super(world, null, 100.0F);
       this.field_70170_p = world;
       this.field_70178_ae = false;
    }
@@ -48,8 +48,8 @@ public class EntityShopKeeper extends EntityNPC {
 
    public boolean func_70085_c(EntityPlayer entityplayer) {
       if(this.canInteractWith(entityplayer)) {
-         this.func_70691_i(100.0F);
-         Minecraft minecraft = ModLoader.getMinecraftInstance();
+         this.heal(100.0F);
+         Minecraft minecraft = Minecraft.getMinecraft();
          int i = 0;
          int j = 0;
          String s = "";

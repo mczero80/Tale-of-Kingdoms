@@ -10,6 +10,7 @@ import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathEntity;
@@ -24,7 +25,7 @@ public class EntityHired extends EntityNPC {
    private World field_70170_p;
    private EntityPlayer player;
    private Random field_70146_Z = new Random();
-   private static ItemStack defaultHeldItem = new ItemStack(Item.swordIron, 1);
+   private static ItemStack defaultHeldItem = new ItemStack(Items.iron_sword, 1);
    public boolean isSwinging;
    public int field_110158_av;
    protected int attackStrength;
@@ -44,12 +45,12 @@ public class EntityHired extends EntityNPC {
    public boolean func_70085_c(EntityPlayer entityplayer) {
       this.player = entityplayer;
       if(defaultHeldItem.itemID == 267) {
-         defaultHeldItem = new ItemStack(Item.bow, 1);
+         defaultHeldItem = new ItemStack(Items.bow, 1);
          if(!this.field_70170_p.isRemote) {
             this.player.addChatMessage("Hunter: I shall use my bow.");
          }
       } else {
-         defaultHeldItem = new ItemStack(Item.swordIron, 1);
+         defaultHeldItem = new ItemStack(Items.iron_sword, 1);
          if(!this.field_70170_p.isRemote) {
             this.player.addChatMessage("Hunter: I shall use my sword.");
          }

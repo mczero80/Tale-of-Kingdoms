@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import org.lwjgl.opengl.GL11;
 
-public class GuiPriceBar extends Gui {
+public final class GuiPriceBar extends Gui {
 
    public int xPosition;
    public int borderColor;
@@ -63,11 +63,11 @@ public class GuiPriceBar extends Gui {
    public void drawBar() {
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
       if(this.border) {
-         func_73734_a(this.xPosition, this.yPosition, this.xPosition + this.width, this.yPosition + this.height, this.borderColor);
+         drawRect(this.xPosition, this.yPosition, this.xPosition + this.width, this.yPosition + this.height, this.borderColor);
       }
 
-      func_73734_a(this.xPosition + 1, this.yPosition + 1, this.xPosition + 1 + this.width - 2, this.yPosition + 1 + this.height - 2, -16777216);
-      func_73734_a(this.xPosition + 1, this.yPosition + 1, this.xPosition + 1 + (int)(this.barPosition * (float)(this.width - 2)), this.yPosition + 1 + this.height - 2, this.colour);
+      drawRect(this.xPosition + 1, this.yPosition + 1, this.xPosition + 1 + this.width - 2, this.yPosition + 1 + this.height - 2, -16777216);
+      drawRect(this.xPosition + 1, this.yPosition + 1, this.xPosition + 1 + (int)(this.barPosition * (float)(this.width - 2)), this.yPosition + 1 + this.height - 2, this.colour);
    }
 
    public boolean mousePressed(Minecraft minecraft, int i, int j) {

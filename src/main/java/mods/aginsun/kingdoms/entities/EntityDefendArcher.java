@@ -1,7 +1,5 @@
 package mods.aginsun.kingdoms.entities;
 
-import java.util.List;
-
 import mods.aginsun.kingdoms.entities.api.EntityNPC;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
@@ -13,19 +11,22 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.item.Item;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.src.ModLoader;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
+import java.util.List;
+
 public class EntityDefendArcher extends EntityNPC {
 
    private World field_70170_p;
-   private static ItemStack defaultHeldItem = new ItemStack(Item.bow, 1);
+   private static ItemStack defaultHeldItem = new ItemStack(Items.bow, 1);
    private int level = 0;
    private boolean follow = false;
    private boolean checkPlayer = true;
@@ -85,7 +86,7 @@ public class EntityDefendArcher extends EntityNPC {
       if(!this.follow) {
          this.follow = true;
          if(!this.field_70170_p.isRemote) {
-            entityplayer.addChatMessage("Archer: I will follow you.");
+            entityplayer.addChatMessage(new ChatComponentText("Archer: I will follow you."));
          }
 
          this.defend.func_70106_y();
@@ -93,7 +94,7 @@ public class EntityDefendArcher extends EntityNPC {
       } else {
          this.follow = false;
          if(!this.field_70170_p.isRemote) {
-            entityplayer.addChatMessage("Archer:I will guard this area.");
+            entityplayer.addChatMessage(new ChatComponentText("Archer:I will guard this area."));
          }
       }
 
