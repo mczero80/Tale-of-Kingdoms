@@ -46,16 +46,16 @@ public class EntityWorkerMember extends EntityNPC {
       this.isMining = false;
       this.marker2 = null;
       this.field_70170_p = world;
-      this.field_70178_ae = false;
+      this.isImmuneToFire = false;
       Minecraft minecraft = Minecraft.getMinecraft();
       this.player = minecraft.thePlayer;
    }
 
-   protected boolean func_70780_i() {
+   protected boolean isMovementCeased() {
       return this.freeze;
    }
 
-   public boolean func_70085_c(EntityPlayer entityplayer) {
+   public boolean interact(EntityPlayer entityplayer) {
       boolean flag = false;
       if(this.worktype == 0) {
          Minecraft j = Minecraft.getMinecraft();

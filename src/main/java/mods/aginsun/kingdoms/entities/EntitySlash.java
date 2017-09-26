@@ -1,17 +1,20 @@
 package mods.aginsun.kingdoms.entities;
 
-import java.util.List;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
-public class EntitySlash extends EntityBlaze {
+import java.util.List;
+
+public final class EntitySlash extends EntityBlaze {
 
    public int counter = 0;
    public int speed = 200;
@@ -48,11 +51,11 @@ public class EntitySlash extends EntityBlaze {
       }
 
       if(this.counter % 2 == 0 && this.explode && this.speed != 200) {
-         this.field_70170_p.newExplosion((Entity)null, this.field_70165_t, this.field_70163_u + 1.0D, this.field_70161_v, 2.0F, true, false);
+         this.field_70170_p.newExplosion((Entity)null, this.posX, this.posY + 1.0D, this.posZ, 2.0F, true, false);
       }
 
       if(this.counter % 2 == 0 && this.surround) {
-         List list = this.field_70170_p.getEntitiesWithinAABB(EntityLiving.class, AxisAlignedBB.getBoundingBox(this.field_70165_t, this.field_70163_u, this.field_70161_v, this.field_70165_t + 1.0D, this.field_70163_u + 1.0D, this.field_70161_v + 1.0D).expand(this.range, this.range, this.range));
+         List list = this.field_70170_p.getEntitiesWithinAABB(EntityLiving.class, AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX + 1.0D, this.posY + 1.0D, this.posZ + 1.0D).expand(this.range, this.range, this.range));
          if(!list.isEmpty()) {
             boolean flag = true;
             EntityLivingBase entityliving = (EntityLivingBase)list.get(this.field_70170_p.rand.nextInt(list.size()));
@@ -61,7 +64,7 @@ public class EntitySlash extends EntityBlaze {
             }
 
             if(this.entityplayer != null && flag) {
-               this.field_70170_p.newExplosion(this.entityplayer, entityliving.field_70165_t, entityliving.field_70163_u + 1.0D, entityliving.field_70161_v, 1.0F, true, false);
+               this.field_70170_p.newExplosion(this.entityplayer, entityliving.posX, entityliving.posY + 1.0D, entityliving.posZ, 1.0F, true, false);
             }
          }
       }
@@ -70,29 +73,21 @@ public class EntitySlash extends EntityBlaze {
 
    protected void attackEntity(Entity entity, float f) {}
 
-   protected void func_70069_a(float f) {}
+   protected void fall(float f) {}
 
-   public void func_70014_b(NBTTagCompound nbttagcompound) {}
+   public void writeEntityToNBT(NBTTagCompound nbttagcompound) {}
 
-   public void func_70037_a(NBTTagCompound nbttagcompound) {}
+   public void readEntityFromNBT(NBTTagCompound nbttagcompound) {}
 
-   protected int func_70633_aT() {
-      return 0;
+   @Override
+   protected Item getDropItem()
+   {
+      return Item.getItemFromBlock(Blocks.air);
    }
 
-   public boolean func_70027_ad() {
+   public boolean isBurning() {
       return false;
    }
 
-   protected void func_70628_a(boolean flag, int i) {}
-
-   public boolean func_40151_ac() {
-      return false;
-   }
-
-   public void func_40150_a(boolean flag) {}
-
-   protected boolean func_40147_Y() {
-      return true;
-   }
+   protected void dropFewItems(boolean flag, int i) {}
 }

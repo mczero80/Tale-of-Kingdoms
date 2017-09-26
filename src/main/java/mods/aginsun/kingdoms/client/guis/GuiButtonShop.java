@@ -12,7 +12,7 @@ public final class GuiButtonShop extends GuiButton {
    private GuiShopList gui;
    private GuiStockList gui2;
    private Item item;
-   private Item itemID;
+   private int itemID;
    protected int field_73747_a;
    protected int field_73745_b;
    public int field_73746_c;
@@ -23,11 +23,11 @@ public final class GuiButtonShop extends GuiButton {
    public boolean enabled2;
 
 
-   public GuiButtonShop(Item integer, GuiShopList guishoplist, int i, int j, int k, int l, int i1, String s) {
+   public GuiButtonShop(int integer, GuiShopList guishoplist, int i, int j, int k, int l, int i1, String s) {
       super(i, j, k, 200, 20, s);
       this.gui = guishoplist;
       this.itemID = integer;
-      Item item1 = (new ItemStack(integer, 1, 0)).getItem();
+      Item item1 = (new ItemStack(Item.getItemById(integer), 1, 0)).getItem();
       this.item = item1;
       this.field_73747_a = 200;
       this.field_73745_b = 20;
@@ -76,7 +76,7 @@ public final class GuiButtonShop extends GuiButton {
          boolean flag = i >= this.field_73746_c && j >= this.field_73743_d && i < this.field_73746_c + this.field_73747_a && j < this.field_73743_d + this.field_73745_b;
          int k = this.getHoverState(flag);
          if(this.gui != null) {
-            if(this.itemID != null) {
+            if(this.gui.itemSelected == this.itemID) {
                k = 2;
             } else {
                k = 1;

@@ -25,7 +25,7 @@ public class EntityWeaponKeeper extends EntityNPC {
 
 
    public EntityWeaponKeeper(World world) {
-      super(world, (ItemStack)null, 100.0F);
+      super(world, null, 100.0F);
       this.field_70170_p = world;
       this.field_70178_ae = false;
    }
