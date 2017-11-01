@@ -6,6 +6,7 @@ import mods.aginsun.kingdoms.entities.api.EntityNPC;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
@@ -13,7 +14,7 @@ import net.minecraft.world.World;
 
 public class EntityKingdomWorker extends EntityNPC {
 
-   public static ItemStack defaultHeldItem = new ItemStack(Item.axeIron, 1);
+   public static ItemStack defaultHeldItem = new ItemStack(Items.iron_axe, 1);
    public Entity marker2 = null;
    private World field_70170_p;
    private int counter = 0;

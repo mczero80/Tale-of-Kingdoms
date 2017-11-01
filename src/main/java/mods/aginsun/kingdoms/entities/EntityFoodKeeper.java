@@ -51,7 +51,7 @@ public class EntityFoodKeeper extends EntityNPC {
                   s = item.getUnlocalizedName();
                }
 
-               if(item.itemID == 354) {
+               if(item == Item.getItemById(354)) {
                   flag1 = true;
                }
 
@@ -68,7 +68,7 @@ public class EntityFoodKeeper extends EntityNPC {
                }
 
                if(j > 0 && !s1.equals("null.name") && !s1.equals(s2)) {
-                  this.itemget[i] = Integer.valueOf(itemstack.itemID);
+                  this.itemget[i] = itemstack.getItem();
                   ++i;
                }
             }

@@ -4,8 +4,7 @@ import mods.aginsun.kingdoms.client.guis.GuiLibrary;
 import mods.aginsun.kingdoms.entities.api.EntityNPC;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.src.ModLoader;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
 public class EntityLibraryKeeper extends EntityNPC {
@@ -16,17 +15,17 @@ public class EntityLibraryKeeper extends EntityNPC {
 
 
    public EntityLibraryKeeper(World world) {
-      super(world, (ItemStack)null, 100.0F);
+      super(world, null, 100.0F);
       this.field_70170_p = world;
-      this.field_70178_ae = false;
+      this.isImmuneToFire = false;
    }
 
-   public boolean func_70104_M() {
+   public boolean canBePushed() {
       return false;
    }
 
-   protected void func_70626_be() {
-      super.func_70626_be();
+   protected void updateEntityActionState() {
+      super.updateEntityActionState();
       if(this.counter > 10000) {
          this.studied = true;
          this.counter = 0;
@@ -35,16 +34,16 @@ public class EntityLibraryKeeper extends EntityNPC {
       ++this.counter;
    }
 
-   protected boolean func_70780_i() {
+   protected boolean isMovementCeased() {
       return true;
    }
 
-   public boolean func_70085_c(EntityPlayer entityplayer) {
+   public boolean interact(EntityPlayer entityplayer) {
       if(this.canInteractWith(entityplayer)) {
-         this.func_70691_i(100.0F);
-         Minecraft minecraft = ModLoader.getMinecraftInstance();
+         this.heal(100.0F);
+         Minecraft minecraft = Minecraft.getMinecraft();
          if(!this.field_70170_p.isRemote) {
-            entityplayer.addChatMessage("Librarian: You picked a good day to visit the library, young one");
+            entityplayer.addChatMessage(new ChatComponentText("Librarian: You picked a good day to visit the library, young one"));
          }
 
          minecraft.displayGuiScreen(new GuiLibrary(entityplayer, this.field_70170_p, this));

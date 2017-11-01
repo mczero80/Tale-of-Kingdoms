@@ -140,7 +140,7 @@ public class EntityDefendArcher extends EntityNPC {
 
    }
 
-   protected void func_70785_a(Entity entity, float f) {
+   protected void attackEntity(Entity entity, float f) {
       if(f < 10.0F) {
          double d = entity.posX - this.field_70165_t;
          double d1 = entity.posZ - this.field_70161_v;
@@ -172,12 +172,12 @@ public class EntityDefendArcher extends EntityNPC {
       }
 
       if(flag) {
-         super.func_70097_a(damagesource, (float)i);
+         super.attackEntityFrom(damagesource, (float)i);
       }
 
       return true;
    }
 
-   public void func_70645_a(DamageSource damagesource) {}
+   public void onDeath(DamageSource damagesource) {}
 
 }

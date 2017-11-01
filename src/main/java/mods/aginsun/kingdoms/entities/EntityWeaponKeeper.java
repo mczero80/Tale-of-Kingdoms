@@ -6,13 +6,7 @@ import mods.aginsun.kingdoms.handlers.GoldKeeper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
-import net.minecraft.item.ItemTool;
-import net.minecraft.src.ModLoader;
+import net.minecraft.item.*;
 import net.minecraft.util.StringTranslate;
 import net.minecraft.world.World;
 
@@ -27,18 +21,18 @@ public class EntityWeaponKeeper extends EntityNPC {
    public EntityWeaponKeeper(World world) {
       super(world, null, 100.0F);
       this.field_70170_p = world;
-      this.field_70178_ae = false;
+      this.isImmuneToFire = false;
    }
 
-   protected boolean func_70780_i() {
+   protected boolean isMovementCeased() {
       return true;
    }
 
-   public boolean func_70104_M() {
+   public boolean canBePushed() {
       return false;
    }
 
-   public boolean func_70085_c(EntityPlayer entityplayer) {
+   public boolean interact(EntityPlayer entityplayer) {
       if(this.canInteractWith(entityplayer)) {
          this.heal(100.0F);
          Minecraft minecraft = Minecraft.getMinecraft();
@@ -89,7 +83,7 @@ public class EntityWeaponKeeper extends EntityNPC {
                }
 
                if(j > 0 && !s1.equals("null.name") && !s1.equals(s2)) {
-                  this.itemget[i] = Integer.valueOf(itemstack.getItem());
+                  this.itemget[i] = itemstack.getItem();
                   ++i;
                }
             }

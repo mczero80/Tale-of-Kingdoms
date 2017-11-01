@@ -4,8 +4,7 @@ import mods.aginsun.kingdoms.client.guis.GuiHunter;
 import mods.aginsun.kingdoms.entities.api.EntityNPC;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.src.ModLoader;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
 public class EntityHunterKeeper extends EntityNPC {
@@ -14,25 +13,25 @@ public class EntityHunterKeeper extends EntityNPC {
 
 
    public EntityHunterKeeper(World world) {
-      super(world, (ItemStack)null, 100.0F);
+      super(world, null, 100.0F);
       this.field_70170_p = world;
-      this.field_70178_ae = false;
+      this.isImmuneToFire = false;
    }
 
-   public boolean func_70104_M() {
+   public boolean canBePushed() {
       return false;
    }
 
-   protected boolean func_70780_i() {
+   protected boolean isMovementCeased() {
       return true;
    }
 
-   public boolean func_70085_c(EntityPlayer entityplayer) {
+   public boolean interact(EntityPlayer entityplayer) {
       if(this.canInteractWith(entityplayer)) {
-         this.func_70691_i(100.0F);
-         Minecraft minecraft = ModLoader.getMinecraftInstance();
+         this.heal(100.0F);
+         Minecraft minecraft = Minecraft.getMinecraft();
          if(!this.field_70170_p.isRemote) {
-            entityplayer.addChatMessage("Guild Master: Welcome to the order, hero.");
+            entityplayer.addChatMessage(new ChatComponentText("Guild Master: Welcome to the order, hero."));
          }
 
          minecraft.displayGuiScreen(new GuiHunter(entityplayer, this.field_70170_p));

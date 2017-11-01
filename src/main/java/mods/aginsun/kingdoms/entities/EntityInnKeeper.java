@@ -4,8 +4,7 @@ import mods.aginsun.kingdoms.client.guis.GuiInnMenu;
 import mods.aginsun.kingdoms.entities.api.EntityNPC;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.src.ModLoader;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
 public class EntityInnKeeper extends EntityNPC {
@@ -14,22 +13,22 @@ public class EntityInnKeeper extends EntityNPC {
 
 
    public EntityInnKeeper(World world) {
-      super(world, (ItemStack)null, 100.0F);
+      super(world, null, 100.0F);
       this.field_70170_p = world;
-      this.field_70178_ae = false;
+      this.isImmuneToFire = false;
    }
 
-   public boolean func_70104_M() {
+   public boolean canBePushed() {
       return false;
    }
 
-   public boolean func_70085_c(EntityPlayer entityplayer) {
+   public boolean interact(EntityPlayer entityplayer) {
       if(!this.field_70170_p.isRemote) {
-         entityplayer.addChatMessage("House Keeper: Would you like to take a rest sir?");
+         entityplayer.addChatMessage(new ChatComponentText("House Keeper: Would you like to take a rest sir?"));
       }
 
       if(this.canInteractWith(entityplayer)) {
-         Minecraft minecraft = ModLoader.getMinecraftInstance();
+         Minecraft minecraft = Minecraft.getMinecraft();
          minecraft.displayGuiScreen(new GuiInnMenu(entityplayer, this.field_70170_p));
       }
 

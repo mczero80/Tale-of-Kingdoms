@@ -5,7 +5,7 @@ import mods.aginsun.kingdoms.client.guis.GuiLumber;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.src.ModLoader;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
 public class EntityLumber extends EntityCreature {
@@ -16,7 +16,7 @@ public class EntityLumber extends EntityCreature {
    public EntityLumber(World world) {
       super(world);
       this.field_70170_p = world;
-      this.field_70178_ae = false;
+      this.isImmuneToFire = false;
    }
 
    protected boolean func_70692_ba() {
@@ -24,23 +24,23 @@ public class EntityLumber extends EntityCreature {
    }
 
    public boolean canInteractWith(EntityPlayer entityplayer) {
-      return this.field_70128_L?false:entityplayer.func_70068_e(this) <= 64.0D;
+      return this.isDead?false:entityplayer.getDistanceSqToEntity(this) <= 64.0D;
    }
 
-   public boolean func_70104_M() {
+   public boolean canBePushed() {
       return false;
    }
 
-   protected boolean func_70780_i() {
+   protected boolean isMovementCeased() {
       return true;
    }
 
-   public boolean func_70085_c(EntityPlayer entityplayer) {
+   public boolean interact(EntityPlayer entityplayer) {
       if(this.canInteractWith(entityplayer)) {
-         this.func_70691_i(100.0F);
-         Minecraft minecraft = ModLoader.getMinecraftInstance();
+         this.heal(100.0F);
+         Minecraft minecraft = Minecraft.getMinecraft();
          if(!this.field_70170_p.isRemote) {
-            entityplayer.addChatMessage("Foreman: Do you need resources sir?");
+            entityplayer.addChatMessage(new ChatComponentText("Foreman: Do you need resources sir?"));
          }
 
          minecraft.displayGuiScreen(new GuiLumber(entityplayer, this.field_70170_p));

@@ -45,7 +45,7 @@ import mods.aginsun.kingdoms.entities.EntityVillageMember;
 import mods.aginsun.kingdoms.entities.EntityWeaponKeeper;
 import mods.aginsun.kingdoms.entities.EntityWorkerMember;
 
-public class EntityRegistryToK {
+public final class EntityRegistryToK {
 
    public static void registerEntities() {
       registerEntity(EntityStableMaster.class, "StableMaster", 214);
