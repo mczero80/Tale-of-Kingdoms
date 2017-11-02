@@ -47,7 +47,6 @@ public final class EntityPowerWave extends EntityThrowable {
 
    protected void onThrowableCollision(MovingObjectPosition movingobjectposition) {
       if(movingobjectposition.entityHit != null) {
-         ;
       }
 
    }
@@ -81,7 +80,7 @@ public final class EntityPowerWave extends EntityThrowable {
             }
          }
 
-         this.field_70170_p.newExplosion((Entity)null, (double)i, (double)(j + 1), (double)k, 1.0F, false, false);
+         this.field_70170_p.newExplosion(null, (double)i, (double)(j + 1), (double)k, 1.0F, false, false);
       }
 
       if(this.counter >= this.duration) {

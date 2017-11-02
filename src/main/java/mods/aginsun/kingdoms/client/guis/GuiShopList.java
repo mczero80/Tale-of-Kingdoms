@@ -25,7 +25,7 @@ public final class GuiShopList extends GuiScreen {
    public StringTranslate st = new StringTranslate();
    private int checkBounty = 0, currentGui = 0, price, shopcounter = 20;
    private int[] item = new int[200];
-   private int[] itemget = new int[200];
+   private Integer[] itemget = new Integer[200];
    boolean reachedend = false;
    public Integer itemSelected;
    private boolean goldchecker = false;
@@ -34,7 +34,7 @@ public final class GuiShopList extends GuiScreen {
    public EntityForgeKeeper forgekeeper;
 
 
-   public GuiShopList(EntityPlayer entityplayer1, World world, int[] ainteger) {
+   public GuiShopList(EntityPlayer entityplayer1, World world, Integer[] ainteger) {
       this.itemget = ainteger;
       this.entityplayer = entityplayer1;
       this.worldObj = world;

@@ -16,7 +16,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
-public class EntityLoneTraveller extends EntityNPC {
+public final class EntityLoneTraveller extends EntityNPC {
 
    private World field_70170_p = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(0);
    private static ItemStack defaultHeldItem = new ItemStack(Items.iron_sword, 1);
@@ -25,20 +25,20 @@ public class EntityLoneTraveller extends EntityNPC {
    public EntityLoneTraveller(World world) {
       super(world, defaultHeldItem, 20.0F);
       this.field_70170_p = world;
-      this.field_70178_ae = true;
+      this.isImmuneToFire = true;
    }
 
-   protected boolean func_70780_i() {
+   protected boolean isMovementCeased() {
       return true;
    }
 
-   public boolean func_70085_c(EntityPlayer entityplayer) {
+   public boolean interact(EntityPlayer entityplayer) {
       boolean flag1 = false;
-      List list = this.field_70170_p.getEntitiesWithinAABB(EntityCreature.class, AxisAlignedBB.getBoundingBox(this.field_70165_t, this.field_70163_u, this.field_70161_v, this.field_70165_t + 1.0D, this.field_70163_u + 1.0D, this.field_70161_v + 1.0D).expand(16.0D, 4.0D, 16.0D));
+      List list = this.field_70170_p.getEntitiesWithinAABB(EntityCreature.class, AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX + 1.0D, this.posY + 1.0D, this.posZ + 1.0D).expand(16.0D, 4.0D, 16.0D));
       if(!list.isEmpty()) {
-         for(int i = 0; i < list.size(); ++i) {
-            Entity entity = (Entity)list.get(i);
-            if(this.func_70685_l(entity) && entity instanceof EntityLostVillager) {
+         for (Object aList : list) {
+            Entity entity = (Entity) aList;
+            if (this.canEntityBeSeen(entity) && entity instanceof EntityLostVillager) {
                entity.setDead();
                WorthyKeeper.getInstance().addWorthy(400.0F);
                flag1 = true;
@@ -57,8 +57,7 @@ public class EntityLoneTraveller extends EntityNPC {
       return true;
    }
 
-   public void func_70636_d() {
-      super.func_70636_d();
+   public void onLivingUpdate() {
+      super.onLivingUpdate();
    }
-
 }

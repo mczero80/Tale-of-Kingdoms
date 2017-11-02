@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
-public class EntityHunterKeeper extends EntityNPC {
+public final class EntityHunterKeeper extends EntityNPC {
 
    private World field_70170_p;
 

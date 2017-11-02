@@ -2,8 +2,6 @@ package mods.aginsun.kingdoms.entities;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
-import java.util.List;
-
 import mods.aginsun.kingdoms.entities.api.EntityNPC;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
@@ -13,16 +11,16 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathEntity;
-import net.minecraft.src.ModLoader;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
-public class EntityDefendPriest extends EntityNPC {
+import java.util.List;
+
+public final class EntityDefendPriest extends EntityNPC {
 
    private World field_70170_p = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(0);
    private EntityPlayer player;
@@ -44,15 +42,15 @@ public class EntityDefendPriest extends EntityNPC {
       this.healCounter = 0;
       this.whenHealing = 0;
       this.field_70170_p = world;
-      this.field_70178_ae = false;
+      this.isImmuneToFire = false;
       this.attackStrength = 10;
    }
 
-   public void func_70636_d() {
-      super.func_70636_d();
+   public void onLivingUpdate() {
+      super.onLivingUpdate();
       if(this.whenHealing < 50) {
          for(int minecraft = 0; minecraft < 2; ++minecraft) {
-            this.field_70170_p.spawnParticle("heart", this.field_70165_t + (this.field_70146_Z.nextDouble() - 0.5D) * (double)this.field_70130_N, this.field_70163_u + this.field_70146_Z.nextDouble() * (double)this.field_70131_O - 0.25D, this.field_70161_v + (this.field_70146_Z.nextDouble() - 0.5D) * (double)this.field_70130_N, (this.field_70146_Z.nextDouble() - 0.5D) * 2.0D, -this.field_70146_Z.nextDouble(), (this.field_70146_Z.nextDouble() - 0.5D) * 2.0D);
+            this.field_70170_p.spawnParticle("heart", this.posX + (this.rand.nextDouble() - 0.5D) * (double)this.width, this.posY + this.rand.nextDouble() * (double)this.height - 0.25D, this.posZ + (this.rand.nextDouble() - 0.5D) * (double)this.width, (this.rand.nextDouble() - 0.5D) * 2.0D, -this.rand.nextDouble(), (this.rand.nextDouble() - 0.5D) * 2.0D);
          }
       }
 
@@ -65,7 +63,7 @@ public class EntityDefendPriest extends EntityNPC {
          Minecraft var5 = Minecraft.getMinecraft();
          EntityClientPlayerMP entityplayersp = var5.thePlayer;
          if(entityplayersp != null) {
-            float f = entityplayersp.func_70032_d(this);
+            float f = entityplayersp.getDistanceToEntity(this);
             PathEntity pathentity;
             if(f > 5.0F && f < 18.0F) {
                pathentity = this.field_70170_p.getPathEntityToEntity(this, entityplayersp, 16.0F, true, false, false, true);
@@ -73,13 +71,13 @@ public class EntityDefendPriest extends EntityNPC {
                pathentity = null;
             }
 
-            this.func_70778_a(pathentity);
+            this.setPathToEntity(pathentity);
          }
       }
 
    }
 
-   public boolean func_70085_c(EntityPlayer entityplayer) {
+   public boolean interact(EntityPlayer entityplayer) {
       this.player = entityplayer;
       if(!this.follow) {
          this.follow = true;
@@ -96,8 +94,8 @@ public class EntityDefendPriest extends EntityNPC {
       return true;
    }
 
-   protected void func_70626_be() {
-      super.func_70626_be();
+   protected void updateEntityActionState() {
+      super.updateEntityActionState();
       byte i = 6;
       if(this.isSwinging) {
          ++this.field_110158_av;
@@ -109,7 +107,7 @@ public class EntityDefendPriest extends EntityNPC {
          this.field_110158_av = 0;
       }
 
-      this.field_70733_aJ = (float)this.field_110158_av / (float)i;
+      this.swingProgress = (float)this.field_110158_av / (float)i;
       if(this.checkPlayer) {
          for(int flag = 0; flag < this.field_70170_p.loadedEntityList.size(); ++flag) {
             Entity list = (Entity)this.field_70170_p.loadedEntityList.get(flag);
@@ -118,14 +116,14 @@ public class EntityDefendPriest extends EntityNPC {
             }
          }
 
-         if(this.player != null && this.player.func_70068_e(this) <= 64.0D) {
+         if(this.player != null && this.player.getDistanceSqToEntity(this) <= 64.0D) {
             this.follow = true;
          }
       }
 
       this.checkPlayer = false;
       boolean var5 = false;
-      List var6 = this.field_70170_p.getEntitiesWithinAABB(EntityLiving.class, AxisAlignedBB.getBoundingBox(this.field_70165_t, this.field_70163_u, this.field_70161_v, this.field_70165_t + 1.0D, this.field_70163_u + 1.0D, this.field_70161_v + 1.0D).expand(16.0D, 4.0D, 16.0D));
+      List var6 = this.field_70170_p.getEntitiesWithinAABB(EntityLiving.class, AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX + 1.0D, this.posY + 1.0D, this.posZ + 1.0D).expand(16.0D, 4.0D, 16.0D));
       if(!var6.isEmpty()) {
          EntityLivingBase entityliving = (EntityLivingBase)var6.get(this.field_70170_p.rand.nextInt(var6.size()));
          if(this.healCounter > 20 && (entityliving instanceof EntityDefendBandit || entityliving instanceof EntityDefendKnight || entityliving instanceof EntityDefendMage || entityliving instanceof EntityDefendPaladin || entityliving instanceof EntityDefendWarrior || entityliving instanceof EntityDefendArcher || entityliving instanceof EntityHired || entityliving instanceof EntityPlayer || entityliving instanceof EntityPlayerSP) && entityliving.getHealth() < 15.0F) {
@@ -143,7 +141,7 @@ public class EntityDefendPriest extends EntityNPC {
       ++this.healCounter;
    }
 
-   public ItemStack func_70694_bm() {
+   public ItemStack getHeldItem() {
       return defaultHeldItem;
    }
 
@@ -155,15 +153,15 @@ public class EntityDefendPriest extends EntityNPC {
       }
 
       if(flag) {
-         super.func_70097_a(damagesource, (float)i);
+         super.attackEntityFrom(damagesource, (float)i);
       }
 
       return true;
    }
 
-   public void func_70645_a(DamageSource damagesource) {}
+   public void onDeath(DamageSource damagesource) {}
 
-   public void func_71038_i() {
+   public void swingItem() {
       if(!this.isSwinging || this.field_110158_av < 0) {
          this.field_110158_av = -1;
          this.isSwinging = true;

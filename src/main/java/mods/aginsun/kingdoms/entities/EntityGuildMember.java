@@ -1,6 +1,5 @@
 package mods.aginsun.kingdoms.entities;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import java.util.List;
 import java.util.Random;
 import mods.aginsun.kingdoms.entities.api.EntityNPC;
@@ -21,9 +20,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class EntityGuildMember extends EntityNPC {
+public final class EntityGuildMember extends EntityNPC {
 
-   private World field_70170_p = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(0);
    private EntityPlayer player;
    private static ItemStack defaultHeldItem = new ItemStack(Items.iron_sword, 1);
    private boolean fight = false;
@@ -35,23 +33,22 @@ public class EntityGuildMember extends EntityNPC {
 
    public EntityGuildMember(World world) {
       super(world, defaultHeldItem, 40.0F);
-      this.field_70170_p = world;
-      this.field_70178_ae = true;
+      this.isImmuneToFire = true;
       this.attackStrength = 15;
    }
 
-   public boolean func_70104_M() {
+   public boolean canBePushed() {
       return false;
    }
 
-   public boolean func_70085_c(EntityPlayer entityplayer) {
+   public boolean interact(EntityPlayer entityplayer) {
       this.player = entityplayer;
       if(UtilToK.guildFightEnded) {
          ItemStack itemstack = entityplayer.inventory.getCurrentItem();
          if(itemstack != null) {
-            if(itemstack.itemID == 268) {
+            if(itemstack.getItem() == Item.getItemById(268)) {
                defaultHeldItem = new ItemStack(Items.wooden_sword, 1);
-               entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, (ItemStack)null);
+               entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, null);
                if(!this.world.isRemote) {
                   entityplayer.addChatMessage(new ChatComponentText("Guild Member: Get Ready."));
                }
@@ -70,7 +67,7 @@ public class EntityGuildMember extends EntityNPC {
       return true;
    }
 
-   public void func_70645_a(DamageSource damagesource) {
+   public void onDeath(DamageSource damagesource) {
       if(this.fight) {
          WorthyKeeper.getInstance().addWorthy(50.0F);
          if(this.player != null && !this.world.isRemote) {
@@ -80,8 +77,8 @@ public class EntityGuildMember extends EntityNPC {
 
    }
 
-   protected void func_70626_be() {
-      super.func_70626_be();
+   protected void updateEntityActionState() {
+      super.updateEntityActionState();
       if(this.fight) {
          ++this.counter;
          if(this.counter == 10 && !this.world.isRemote) {
@@ -98,7 +95,7 @@ public class EntityGuildMember extends EntityNPC {
 
          if(this.counter == 40 && !this.world.isRemote) {
             this.player.addChatMessage(new ChatComponentText("Guild Member: Begin!"));
-            this.field_70789_a = this.player;
+            this.entityToAttack = this.player;
          }
       }
 
@@ -113,60 +110,60 @@ public class EntityGuildMember extends EntityNPC {
          this.field_110158_av = 0;
       }
 
-      this.field_70733_aJ = (float)this.field_110158_av / (float)i;
-      if(this.field_70789_a == null && !this.func_70781_l()) {
-         List list = this.world.getEntitiesWithinAABB(EntityCreature.class, AxisAlignedBB.getBoundingBox(this.field_70165_t, this.field_70163_u, this.field_70161_v, this.field_70165_t + 1.0D, this.field_70163_u + 1.0D, this.field_70161_v + 1.0D).expand(20.0D, 4.0D, 20.0D));
+      this.swingProgress = (float)this.field_110158_av / (float)i;
+      if(this.entityToAttack == null && !this.hasPath()) {
+         List list = this.world.getEntitiesWithinAABB(EntityCreature.class, AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX + 1.0D, this.posY + 1.0D, this.posZ + 1.0D).expand(20.0D, 4.0D, 20.0D));
          if(!list.isEmpty()) {
             Entity entity = (Entity)list.get(this.world.rand.nextInt(list.size()));
             if(entity instanceof EntityCreeper) {
                entity.setDead();
             } else if(entity instanceof EntityMob || entity instanceof EntityReficulSoldier || entity instanceof EntityReficulGuardian || entity instanceof EntityReficulMage) {
-               defaultHeldItem = new ItemStack(Item.swordIron, 1);
-               this.field_70789_a = entity;
+               defaultHeldItem = new ItemStack(Items.iron_sword, 1);
+               this.entityToAttack = entity;
             }
          }
       }
 
    }
 
-   protected void func_70664_aZ() {
+   protected void jump() {
       Random random = new Random();
       if(random.nextInt(15) == 0) {
-         this.field_70181_x = 0.41999998688697815D;
-         if(this.func_70051_ag()) {
-            float f = this.field_70177_z * 0.01745329F;
-            this.field_70159_w -= (double)(MathHelper.sin(f) * 0.2F);
-            this.field_70179_y += (double)(MathHelper.cos(f) * 0.2F);
+         this.motionY = 0.41999998688697815D;
+         if(this.isSprinting()) {
+            float f = this.rotationYaw * 0.01745329F;
+            this.motionX -= (double)(MathHelper.sin(f) * 0.2F);
+            this.motionZ += (double)(MathHelper.cos(f) * 0.2F);
          }
 
-         this.field_70160_al = true;
+         this.isAirBorne = true;
       }
 
    }
 
-   protected void func_70785_a(Entity entity, float f) {
-      if(this.field_70724_aR <= 0 && f < 2.0F && entity.boundingBox.maxY > this.field_70121_D.minY && entity.boundingBox.minY < this.field_70121_D.maxY) {
-         this.field_70724_aR = 20;
-         this.func_71038_i();
-         this.func_70652_k(entity);
+   protected void attackEntity(Entity entity, float f) {
+      if(this.attackTime <= 0 && f < 2.0F && entity.boundingBox.maxY > this.boundingBox.minY && entity.boundingBox.minY < this.boundingBox.maxY) {
+         this.attackTime = 20;
+         this.swingItem();
+         this.attackEntityAsMob(entity);
       }
 
    }
 
-   public boolean func_70652_k(Entity entity) {
+   public boolean attackEntityAsMob(Entity entity) {
       int i = this.attackStrength;
-      if(this.func_70644_a(Potion.damageBoost)) {
-         i += 3 << this.func_70660_b(Potion.damageBoost).getAmplifier();
+      if(this.isPotionActive(Potion.damageBoost)) {
+         i += 3 << this.getActivePotionEffect(Potion.damageBoost).getAmplifier();
       }
 
-      if(this.func_70644_a(Potion.weakness)) {
-         i -= 2 << this.func_70660_b(Potion.weakness).getAmplifier();
+      if(this.isPotionActive(Potion.weakness)) {
+         i -= 2 << this.getActivePotionEffect(Potion.weakness).getAmplifier();
       }
 
       return entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float)i);
    }
 
-   public void func_71038_i() {
+   public void swingItem() {
       if(!this.isSwinging || this.field_110158_av < 0) {
          this.field_110158_av = -1;
          this.isSwinging = true;

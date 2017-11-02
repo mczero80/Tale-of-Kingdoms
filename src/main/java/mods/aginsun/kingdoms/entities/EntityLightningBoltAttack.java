@@ -1,24 +1,19 @@
 package mods.aginsun.kingdoms.entities;
 
-import java.util.List;
-import mods.aginsun.kingdoms.entities.EntityDefendArcher;
-import mods.aginsun.kingdoms.entities.EntityDefendBandit;
-import mods.aginsun.kingdoms.entities.EntityDefendKnight;
-import mods.aginsun.kingdoms.entities.EntityDefendMage;
-import mods.aginsun.kingdoms.entities.EntityDefendPaladin;
-import mods.aginsun.kingdoms.entities.EntityDefendWarrior;
-import mods.aginsun.kingdoms.entities.EntityHired;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
-public class EntityLightningBoltAttack extends EntityLightningBolt {
+import java.util.List;
+
+public final class EntityLightningBoltAttack extends EntityLightningBolt {
 
    private int field_70262_b;
    public long field_70264_a = 0L;
@@ -27,23 +22,23 @@ public class EntityLightningBoltAttack extends EntityLightningBolt {
 
    public EntityLightningBoltAttack(World world, double d, double d1, double d2) {
       super(world, d - 1000000.0D, d1 - 1000000.0D, d2 - 1000000.0D);
-      this.func_70012_b(d, d1, d2, 0.0F, 0.0F);
+      this.setLocationAndAngles(d, d1, d2, 0.0F, 0.0F);
       this.field_70262_b = 2;
-      this.field_70264_a = this.field_70146_Z.nextLong();
-      this.field_70263_c = this.field_70146_Z.nextInt(3) + 1;
-      if(world.difficultySetting >= 2 && world.doChunksNearChunkExist(MathHelper.floor_double(d), MathHelper.floor_double(d1), MathHelper.floor_double(d2), 10)) {
+      this.field_70264_a = this.rand.nextLong();
+      this.field_70263_c = this.rand.nextInt(3) + 1;
+      if(world.difficultySetting == EnumDifficulty.NORMAL && world.doChunksNearChunkExist(MathHelper.floor_double(d), MathHelper.floor_double(d1), MathHelper.floor_double(d2), 10)) {
          int i = MathHelper.floor_double(d);
          int j = MathHelper.floor_double(d1);
          int k = MathHelper.floor_double(d2);
-         if(world.getBlockId(i, j, k) == 0) {
+         if(world.getBlock(i, j, k) == Blocks.air) {
             ;
          }
 
          for(int l = 0; l < 4; ++l) {
-            int i1 = MathHelper.floor_double(d) + this.field_70146_Z.nextInt(3) - 1;
-            int j1 = MathHelper.floor_double(d1) + this.field_70146_Z.nextInt(3) - 1;
-            int k1 = MathHelper.floor_double(d2) + this.field_70146_Z.nextInt(3) - 1;
-            if(world.getBlockId(i1, j1, k1) == 0) {
+            int i1 = MathHelper.floor_double(d) + this.rand.nextInt(3) - 1;
+            int j1 = MathHelper.floor_double(d1) + this.rand.nextInt(3) - 1;
+            int k1 = MathHelper.floor_double(d2) + this.rand.nextInt(3) - 1;
+            if(world.getBlock(i1, j1, k1) == Blocks.air) {
                ;
             }
          }
@@ -51,25 +46,25 @@ public class EntityLightningBoltAttack extends EntityLightningBolt {
 
    }
 
-   public void func_70071_h_() {
+   public void onUpdate() {
       if(this.field_70262_b == 2) {
-         this.field_70170_p.playSoundEffect(this.field_70165_t, this.field_70163_u, this.field_70161_v, "ambient.weather.thunder", 10000.0F, 0.8F + this.field_70146_Z.nextFloat() * 0.2F);
-         this.field_70170_p.playSoundEffect(this.field_70165_t, this.field_70163_u, this.field_70161_v, "random.explode", 2.0F, 0.5F + this.field_70146_Z.nextFloat() * 0.2F);
+         this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "ambient.weather.thunder", 10000.0F, 0.8F + this.rand.nextFloat() * 0.2F);
+         this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "random.explode", 2.0F, 0.5F + this.rand.nextFloat() * 0.2F);
       }
 
       --this.field_70262_b;
       if(this.field_70262_b < 0) {
          if(this.field_70263_c == 0) {
-            this.func_70106_y();
-         } else if(this.field_70262_b < -this.field_70146_Z.nextInt(10)) {
+            this.setDead();
+         } else if(this.field_70262_b < -this.rand.nextInt(10)) {
             --this.field_70263_c;
             this.field_70262_b = 1;
-            this.field_70264_a = this.field_70146_Z.nextLong();
-            if(this.field_70170_p.doChunksNearChunkExist(MathHelper.floor_double(this.field_70165_t), MathHelper.floor_double(this.field_70163_u), MathHelper.floor_double(this.field_70161_v), 10)) {
-               int d = MathHelper.floor_double(this.field_70165_t);
-               int j = MathHelper.floor_double(this.field_70163_u);
-               int list = MathHelper.floor_double(this.field_70161_v);
-               if(this.field_70170_p.getBlockId(d, j, list) == 0) {
+            this.field_70264_a = this.rand.nextLong();
+            if(this.worldObj.doChunksNearChunkExist(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ), 10)) {
+               int d = MathHelper.floor_double(this.posX);
+               int j = MathHelper.floor_double(this.posY);
+               int list = MathHelper.floor_double(this.posZ);
+               if(this.worldObj.getBlock(d, j, list) == Blocks.air) {
                   ;
                }
             }
@@ -78,7 +73,7 @@ public class EntityLightningBoltAttack extends EntityLightningBolt {
 
       if(this.field_70262_b >= 0) {
          double var7 = 3.0D;
-         List var8 = this.field_70170_p.getEntitiesWithinAABBExcludingEntity(this, AxisAlignedBB.getBoundingBox(this.field_70165_t - var7, this.field_70163_u - var7, this.field_70161_v - var7, this.field_70165_t + var7, this.field_70163_u + 6.0D + var7, this.field_70161_v + var7));
+         List var8 = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, AxisAlignedBB.getBoundingBox(this.posX - var7, this.posY - var7, this.posZ - var7, this.posX + var7, this.posY + 6.0D + var7, this.posZ + var7));
 
          for(int l = 0; l < var8.size(); ++l) {
             boolean flag = true;
@@ -92,18 +87,20 @@ public class EntityLightningBoltAttack extends EntityLightningBolt {
             }
          }
 
-         this.field_70170_p.lastLightningBolt = 2;
+         this.worldObj.lastLightningBolt = 2;
       }
 
    }
 
-   protected void func_70088_a() {}
+   protected void entityInit() {}
 
-   protected void func_70037_a(NBTTagCompound nbttagcompound) {}
+   protected void readEntityFromNBT(NBTTagCompound nbttagcompound) {}
 
-   protected void func_70014_b(NBTTagCompound nbttagcompound) {}
+   protected void writeEntityToNBT(NBTTagCompound nbttagcompound) {}
 
-   public boolean func_70102_a(Vec3 vec3d) {
+   @Override
+   public boolean isInRangeToRenderDist(double p_70112_1_)
+   {
       return this.field_70262_b >= 0;
    }
 }

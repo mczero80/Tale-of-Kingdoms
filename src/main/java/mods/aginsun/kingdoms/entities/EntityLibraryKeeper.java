@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
-public class EntityLibraryKeeper extends EntityNPC {
+public final class EntityLibraryKeeper extends EntityNPC {
 
    private World field_70170_p;
    public boolean studied = true;

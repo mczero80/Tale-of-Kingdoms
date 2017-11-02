@@ -15,17 +15,15 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.potion.Potion;
-import net.minecraft.src.ModLoader;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
-public class EntityDefendWarrior extends EntityNPC {
+public final class EntityDefendWarrior extends EntityNPC {
 
    private World field_70170_p;
    private Random field_70146_Z = new Random();
@@ -49,72 +47,72 @@ public class EntityDefendWarrior extends EntityNPC {
       this.checkPlayer = true;
       this.createdMarker = false;
       this.field_70170_p = world;
-      this.field_70178_ae = false;
+      this.isImmuneToFire = false;
       this.attackStrength = 6;
    }
 
-   protected boolean func_70692_ba() {
+   protected boolean canDespawn() {
       return false;
    }
 
    public void upgrade() {
       EntityLiving entityliving = (EntityLiving)EntityList.createEntityByName("DefendKnight", this.field_70170_p);
-      entityliving.func_70012_b(this.field_70165_t, this.field_70163_u, this.field_70161_v, 0.0F, 0.0F);
+      entityliving.setLocationAndAngles(this.posX, this.posY, this.posZ, 0.0F, 0.0F);
       if(!this.field_70170_p.isRemote) {
          this.field_70170_p.spawnEntityInWorld(entityliving);
       }
 
-      this.func_70106_y();
+      this.setDead();
    }
 
-   public boolean func_70104_M() {
+   public boolean canBePushed() {
       return true;
    }
 
-   protected boolean func_70780_i() {
+   protected boolean isMovementCeased() {
       return false;
    }
 
-   public void func_70636_d() {
-      super.func_70636_d();
+   public void onLivingUpdate() {
+      super.onLivingUpdate();
       Minecraft minecraft = Minecraft.getMinecraft();
       EntityClientPlayerMP entityplayersp = minecraft.thePlayer;
       float f1;
       PathEntity pathentity1;
       if(this.follow) {
          if(entityplayersp != null) {
-            f1 = entityplayersp.func_70032_d(this);
+            f1 = entityplayersp.getDistanceToEntity(this);
             if(f1 > 5.0F && f1 < 18.0F) {
                pathentity1 = this.field_70170_p.getPathEntityToEntity(this, entityplayersp, 16.0F, true, false, false, true);
             } else {
                pathentity1 = null;
             }
 
-            this.func_70778_a(pathentity1);
+            this.setPathToEntity(pathentity1);
          }
       } else {
          if(!this.createdMarker) {
             this.defend = (EntityDefendMarker)EntityList.createEntityByName("DefendMark", this.field_70170_p);
-            this.defend.func_70012_b(this.field_70165_t, this.field_70163_u, this.field_70161_v, 0.0F, 0.0F);
+            this.defend.setLocationAndAngles(this.posX, this.posY, this.posZ, 0.0F, 0.0F);
             this.field_70170_p.spawnEntityInWorld(this.defend);
             this.createdMarker = true;
          }
 
          if(this.createdMarker && this.defend != null) {
-            f1 = this.defend.func_70032_d(this);
+            f1 = this.defend.getDistanceToEntity(this);
             if(f1 > 5.0F && f1 < 40.0F) {
                pathentity1 = this.field_70170_p.getPathEntityToEntity(this, this.defend, 40.0F, true, false, false, true);
             } else {
                pathentity1 = null;
             }
 
-            this.func_70778_a(pathentity1);
+            this.setPathToEntity(pathentity1);
          }
       }
 
    }
 
-   public boolean func_70085_c(EntityPlayer entityplayer) {
+   public boolean interact(EntityPlayer entityplayer) {
       this.player = entityplayer;
       if(!this.follow) {
          this.follow = true;
@@ -122,7 +120,7 @@ public class EntityDefendWarrior extends EntityNPC {
             entityplayer.addChatMessage(new ChatComponentText("Warrior: I will follow you."));
          }
 
-         this.defend.func_70106_y();
+         this.defend.setDead();
          this.createdMarker = false;
       } else {
          this.follow = false;
@@ -134,8 +132,8 @@ public class EntityDefendWarrior extends EntityNPC {
       return true;
    }
 
-   protected void func_70626_be() {
-      super.func_70626_be();
+   protected void updateEntityActionState() {
+      super.updateEntityActionState();
       byte i = 6;
       if(this.isSwinging) {
          ++this.field_110158_av;
@@ -147,7 +145,7 @@ public class EntityDefendWarrior extends EntityNPC {
          this.field_110158_av = 0;
       }
 
-      this.field_70733_aJ = (float)this.field_110158_av / (float)i;
+      this.swingProgress = (float)this.field_110158_av / (float)i;
       Entity entity1;
       if(this.checkPlayer) {
          for(int list = 0; list < this.field_70170_p.loadedEntityList.size(); ++list) {
@@ -157,29 +155,29 @@ public class EntityDefendWarrior extends EntityNPC {
             }
          }
 
-         if(this.player != null && this.player.func_70068_e(this) <= 64.0D) {
+         if(this.player != null && this.player.getDistanceSqToEntity(this) <= 64.0D) {
             this.follow = true;
          }
       }
 
       this.checkPlayer = false;
-      if(this.field_70789_a == null && !this.func_70781_l()) {
-         List var4 = this.field_70170_p.getEntitiesWithinAABB(EntityCreature.class, AxisAlignedBB.getBoundingBox(this.field_70165_t, this.field_70163_u, this.field_70161_v, this.field_70165_t + 1.0D, this.field_70163_u + 1.0D, this.field_70161_v + 1.0D).expand(16.0D, 4.0D, 16.0D));
+      if(this.entityToAttack == null && !this.hasPath()) {
+         List var4 = this.field_70170_p.getEntitiesWithinAABB(EntityCreature.class, AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX + 1.0D, this.posY + 1.0D, this.posX + 1.0D).expand(16.0D, 4.0D, 16.0D));
          if(!var4.isEmpty()) {
             entity1 = (Entity)var4.get(this.field_70170_p.rand.nextInt(var4.size()));
-            if(this.func_70685_l(entity1) && (entity1 instanceof EntityMob || entity1 instanceof EntityReficulSoldier || entity1 instanceof EntityReficulGuardian || entity1 instanceof EntityReficulMage)) {
-               this.field_70789_a = entity1;
+            if(this.canEntityBeSeen(entity1) && (entity1 instanceof EntityMob || entity1 instanceof EntityReficulSoldier || entity1 instanceof EntityReficulGuardian || entity1 instanceof EntityReficulMage)) {
+               this.entityToAttack = entity1;
             }
          }
       }
 
    }
 
-   protected void func_70785_a(Entity entity, float f) {
-      if(this.field_70724_aR <= 0 && f < 2.0F && entity.boundingBox.maxY > this.field_70121_D.minY && entity.boundingBox.minY < this.field_70121_D.maxY) {
-         this.field_70724_aR = 20;
-         this.func_71038_i();
-         this.func_70652_k(entity);
+   protected void attackEntity(Entity entity, float f) {
+      if(this.attackTime <= 0 && f < 2.0F && entity.boundingBox.maxY > this.boundingBox.minY && entity.boundingBox.minY < this.boundingBox.maxY) {
+         this.attackTime = 20;
+         this.swingItem();
+         this.attackEntityAsMob(entity);
          ++this.level;
          if(this.level > 7) {
             this.upgrade();
@@ -188,24 +186,24 @@ public class EntityDefendWarrior extends EntityNPC {
 
    }
 
-   public boolean func_70652_k(Entity entity) {
+   public boolean attackEntityAsMob(Entity entity) {
       int i = this.attackStrength;
-      if(this.func_70644_a(Potion.damageBoost)) {
-         i += 3 << this.func_70660_b(Potion.damageBoost).getAmplifier();
+      if(this.isPotionActive(Potion.damageBoost)) {
+         i += 3 << this.getActivePotionEffect(Potion.damageBoost).getAmplifier();
       }
 
-      if(this.func_70644_a(Potion.weakness)) {
-         i -= 2 << this.func_70660_b(Potion.weakness).getAmplifier();
+      if(this.isPotionActive(Potion.weakness)) {
+         i -= 2 << this.getActivePotionEffect(Potion.weakness).getAmplifier();
       }
 
       return entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float)i);
    }
 
-   public ItemStack func_70694_bm() {
+   public ItemStack getHeldItem() {
       return defaultHeldItem;
    }
 
-   public void func_71038_i() {
+   public void swingItem() {
       if(!this.isSwinging || this.field_110158_av < 0) {
          this.field_110158_av = -1;
          this.isSwinging = true;
@@ -222,13 +220,13 @@ public class EntityDefendWarrior extends EntityNPC {
          }
 
          if(flag) {
-            super.func_70097_a(damagesource, (float)i);
+            super.attackEntityFrom(damagesource, (float)i);
          }
       }
 
       return true;
    }
 
-   public void func_70645_a(DamageSource damagesource) {}
+   public void onDeath(DamageSource damagesource) {}
 
 }

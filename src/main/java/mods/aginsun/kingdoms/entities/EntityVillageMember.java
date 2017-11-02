@@ -23,7 +23,7 @@ public final class EntityVillageMember extends EntityNPC {
 
 
    public EntityVillageMember(World world) {
-      super(world, (ItemStack)null, 30.0F);
+      super(world, null, 30.0F);
       this.worldObj = world;
       this.isImmuneToFire = false;
    }
@@ -35,12 +35,12 @@ public final class EntityVillageMember extends EntityNPC {
    public boolean interact(EntityPlayer entityplayer) {
       ItemStack itemstack = entityplayer.inventory.getCurrentItem();
       if(itemstack != null && !this.hasAxe && (itemstack.getItem() == Items.wooden_axe || itemstack.getItem() == Items.stone_axe || itemstack.getItem() == Items.iron_axe)) {
-         entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, (ItemStack)null);
+         entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, null);
          this.hasAxe = true;
       }
 
       if(itemstack != null && !this.hasPick && (itemstack.getItem() == Items.iron_pickaxe || itemstack.getItem() == Items.wooden_pickaxe || itemstack.getItem() == Items.stone_pickaxe)) {
-         entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, (ItemStack)null);
+         entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, null);
          this.hasPick = true;
       }
 

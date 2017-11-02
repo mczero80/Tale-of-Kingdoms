@@ -10,7 +10,7 @@ import net.minecraft.item.*;
 import net.minecraft.util.StringTranslate;
 import net.minecraft.world.World;
 
-public class EntityWeaponKeeper extends EntityNPC {
+public final class EntityWeaponKeeper extends EntityNPC {
 
    private World field_70170_p;
    private Integer[] itemget = new Integer[200];
@@ -43,8 +43,8 @@ public class EntityWeaponKeeper extends EntityNPC {
          for(int k = 256; k < 32000; ++k) {
             boolean flag2 = false;
             boolean flag3 = true;
-            if(Item.itemsList[k] != null) {
-               ItemStack itemstack = new ItemStack(Item.itemsList[k].itemID, 1, 0);
+            if(Item.getItemById(k) != null) {
+               ItemStack itemstack = new ItemStack(Item.getItemById(k), 1, 0);
                Item item = itemstack.getItem();
                if(item instanceof ItemFood) {
                   flag2 = true;
@@ -78,12 +78,23 @@ public class EntityWeaponKeeper extends EntityNPC {
                   flag3 = false;
                }
 
-               if(l == 26 || l == 34 || l == 36 || l == 43 || l == 51 || l == 52 || l == 55 || l == 59 || l == 60 || l == 62 || l == 63 || l == 64 || l == 68 || l == 71 || l == 74 || l == 75 || l == 78 || l == 90 || l == 93 || l == 94 || l == 97 || l == 99 || l == 100 || l == 104 || l == 105 || l == 110 || l == 92 || l == 354 || l == Items.flint || l == Items.clay_ball || l == Items.iron_ingot || l == Items.diamond || l == Items.fishing_rod || l == Items.apple || l == Items.string || l == Items.feather || flag2 || flag3) {
+               if(l == Item.getItemById(26) || l == Item.getItemById(34) || l == Item.getItemById(36) ||
+                       l == Item.getItemById(43) || l == Item.getItemById(51) || l == Item.getItemById(52) ||
+                       l == Item.getItemById(55) || l == Item.getItemById(59) || l == Item.getItemById(60) ||
+                       l == Item.getItemById(62) || l == Item.getItemById(63) || l == Item.getItemById(64) ||
+                       l == Item.getItemById(68) || l == Item.getItemById(71) || l == Item.getItemById(74) ||
+                       l == Item.getItemById(75) || l == Item.getItemById(78) || l == Item.getItemById(90) ||
+                       l == Item.getItemById(93) || l == Item.getItemById(94) || l == Item.getItemById(97) ||
+                       l == Item.getItemById(99) || l == Item.getItemById(100) || l == Item.getItemById(104) ||
+                       l == Item.getItemById(105) || l == Item.getItemById(110) || l == Item.getItemById(92) ||
+                       l == Item.getItemById(354) || l == Items.flint || l == Items.clay_ball || l == Items.iron_ingot ||
+                       l == Items.diamond || l == Items.fishing_rod || l == Items.apple || l == Items.string ||
+                       l == Items.feather || flag2 || flag3) {
                   j = 0;
                }
 
                if(j > 0 && !s1.equals("null.name") && !s1.equals(s2)) {
-                  this.itemget[i] = itemstack.getItem();
+                  //this.itemget[i] = itemstack.getItem();
                   ++i;
                }
             }

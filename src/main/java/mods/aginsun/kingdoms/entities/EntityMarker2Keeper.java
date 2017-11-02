@@ -4,20 +4,22 @@ import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
-public class EntityMarker2Keeper extends Entity {
+public final class EntityMarker2Keeper extends Entity
+{
+    public EntityMarker2Keeper(World world)
+    {
+        super(world);
+        this.setSize(5.0E-6F, 5.0E-6F);
+    }
 
-   public EntityMarker2Keeper(World world) {
-      super(world);
-      this.setSize(5.0E-6F, 5.0E-6F);
-   }
+    public boolean canBePushed()
+    {
+        return false;
+    }
 
-   public boolean canBePushed() {
-      return false;
-   }
+    public void entityInit() {}
 
-   public void entityInit() {}
+    public void writeEntityToNBT(NBTTagCompound nbttagcompound) {}
 
-   public void writeEntityToNBT(NBTTagCompound nbttagcompound) {}
-
-   public void readEntityFromNBT(NBTTagCompound nbttagcompound) {}
+    public void readEntityFromNBT(NBTTagCompound nbttagcompound) {}
 }

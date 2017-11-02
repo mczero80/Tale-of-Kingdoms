@@ -8,7 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
-public class EntityLumber extends EntityCreature {
+public final class EntityLumber extends EntityCreature {
 
    private World field_70170_p = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(0);
 
@@ -19,7 +19,7 @@ public class EntityLumber extends EntityCreature {
       this.isImmuneToFire = false;
    }
 
-   protected boolean func_70692_ba() {
+   protected boolean canDespawn() {
       return false;
    }
 

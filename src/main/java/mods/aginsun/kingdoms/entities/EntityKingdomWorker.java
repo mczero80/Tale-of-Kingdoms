@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
-public class EntityKingdomWorker extends EntityNPC {
+public final class EntityKingdomWorker extends EntityNPC {
 
    public static ItemStack defaultHeldItem = new ItemStack(Items.iron_axe, 1);
    public Entity marker2 = null;
@@ -26,18 +26,18 @@ public class EntityKingdomWorker extends EntityNPC {
    public EntityKingdomWorker(World world) {
       super(world, defaultHeldItem, 30.0F);
       this.field_70170_p = world;
-      this.field_70178_ae = false;
+      this.isImmuneToFire = false;
    }
 
-   protected boolean func_70780_i() {
+   protected boolean isMovementCeased() {
       return this.move;
    }
 
-   public boolean func_70085_c(EntityPlayer entityplayer) {
+   public boolean interact(EntityPlayer entityplayer) {
       return true;
    }
 
-   public void func_71038_i() {
+   public void swingItem() {
       if(!this.isSwinging || this.field_110158_av < 0) {
          this.field_110158_av = -1;
          this.isSwinging = true;
@@ -45,8 +45,8 @@ public class EntityKingdomWorker extends EntityNPC {
 
    }
 
-   protected void func_70626_be() {
-      super.func_70626_be();
+   protected void updateEntityActionState() {
+      super.updateEntityActionState();
       byte i = 6;
       if(this.isSwinging) {
          ++this.field_110158_av;
@@ -58,16 +58,16 @@ public class EntityKingdomWorker extends EntityNPC {
          this.field_110158_av = 0;
       }
 
-      this.field_70733_aJ = (float)this.field_110158_av / (float)i;
+      this.swingProgress = (float)this.field_110158_av / (float)i;
       if(this.field_70170_p.rand.nextInt(5) == 0) {
-         this.func_71038_i();
+         this.swingItem();
       }
 
       if(this.counter > 200) {
-         List list = this.field_70170_p.getEntitiesWithinAABB(EntityMarker2Keeper.class, AxisAlignedBB.getBoundingBox(this.field_70165_t, this.field_70163_u, this.field_70161_v, this.field_70165_t + 1.0D, this.field_70163_u + 1.0D, this.field_70161_v + 1.0D).expand(16.0D, 16.0D, 16.0D));
+         List list = this.field_70170_p.getEntitiesWithinAABB(EntityMarker2Keeper.class, AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ, this.posX + 1.0D, this.posY + 1.0D, this.posZ + 1.0D).expand(16.0D, 16.0D, 16.0D));
          if(!list.isEmpty()) {
             this.marker2 = (Entity)list.get(this.field_70170_p.rand.nextInt(list.size()));
-            this.field_70789_a = this.marker2;
+            this.entityToAttack = this.marker2;
          }
 
          this.counter = 0;
@@ -79,9 +79,9 @@ public class EntityKingdomWorker extends EntityNPC {
 
    public void createMarker() {
       this.marker2 = EntityList.createEntityByName("Marker2", this.field_70170_p);
-      this.marker2.setLocationAndAngles(this.field_70165_t, this.field_70163_u, this.field_70161_v, 0.0F, 0.0F);
+      this.marker2.setLocationAndAngles(this.posX, this.posY, this.posZ, 0.0F, 0.0F);
       this.field_70170_p.spawnEntityInWorld(this.marker2);
-      defaultHeldItem = new ItemStack(Item.pickaxeIron, 1);
+      defaultHeldItem = new ItemStack(Items.iron_pickaxe, 1);
       System.out.println("marker");
    }
 
