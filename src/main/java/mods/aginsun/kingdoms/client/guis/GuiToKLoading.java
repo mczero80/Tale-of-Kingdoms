@@ -2,6 +2,7 @@ package mods.aginsun.kingdoms.client.guis;
 
 import mods.aginsun.kingdoms.handlers.SchematicHandler;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.resources.I18n;
 
 import java.awt.*;
 
@@ -13,7 +14,7 @@ public final class GuiToKLoading extends GuiScreenToK {
 
    public void initGui() {
       this.bar = new GuiPriceBar(1, this.width / 2 - 100, this.height / 2 - 10, 200, 20, 1.0F, "red");
-      this.buttonList.add(new GuiButton(1, this.width / 2 - 60, this.height / 2 + 25, 120, 20, "Exit"));
+      this.buttonList.add(new GuiButton(1, this.width / 2 - 60, this.height / 2 + 25, 120, 20, I18n.format("gui.exit")));
    }
 
    protected void actionPerformed(GuiButton guibutton) {

@@ -1,5 +1,7 @@
 package mods.aginsun.kingdoms.handlers;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent;
 import mods.aginsun.kingdoms.util.Buildings;
 import mods.aginsun.kingdoms.util.UtilToK;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,15 +11,27 @@ public final class SaveHandlerToK {
 
    private NBTTagCompound nbt;
 
+   @SubscribeEvent
+   public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent e)
+   {
+       this.getData(e.player);
+       Buildings.registerBuildings();
+   }
 
-   public void onPlayerLogin(EntityPlayer player) {
+   @SubscribeEvent
+   public void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent e)
+   {
+       this.setData(e.player);
+   }
+
+   /*public void onPlayerLogin(EntityPlayer player) {
       this.getData(player);
       Buildings.registerBuildings();
-   }
+   }*/
 
-   public void onPlayerLogout(EntityPlayer player) {
+   /*public void onPlayerLogout(EntityPlayer player) {
       this.setData(player);
-   }
+   }*/
 
    public void getData(EntityPlayer player) {
       if(player != null) {

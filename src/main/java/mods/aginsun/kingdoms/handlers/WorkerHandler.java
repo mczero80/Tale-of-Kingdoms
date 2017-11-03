@@ -1,47 +1,52 @@
 package mods.aginsun.kingdoms.handlers;
 
+public final class WorkerHandler
+{
+    private int lumberMembers, quarryMembers;
+    private static WorkerHandler instance = new WorkerHandler();
 
-public final class WorkerHandler {
+    public static WorkerHandler getInstance()
+    {
+        return instance;
+    }
 
-   private int lumberMembers;
-   private int quarryMembers;
-   private static WorkerHandler instance = new WorkerHandler();
+    public int getLumberMembers()
+    {
+        return this.lumberMembers;
+    }
 
+    public void addLumberMember()
+    {
+        ++this.lumberMembers;
+    }
 
-   public static WorkerHandler getInstance() {
-      return instance;
-   }
+    public void removeLumberMember()
+    {
+        --this.lumberMembers;
+    }
 
-   public int getLumberMembers() {
-      return this.lumberMembers;
-   }
+    public void setLumberMembers(int i)
+    {
+        this.lumberMembers = i;
+    }
 
-   public void addLumberMember() {
-      ++this.lumberMembers;
-   }
+    public int getQuarryMembers()
+    {
+        return this.quarryMembers;
+    }
 
-   public void removeLumberMember() {
-      --this.lumberMembers;
-   }
+    public void addQuarryMember()
+    {
+        ++this.quarryMembers;
+    }
 
-   public void setLumberMembers(int i) {
-      this.lumberMembers = i;
-   }
+    public void removeQuarryMember()
+    {
+        --this.quarryMembers;
+    }
 
-   public int getQuarryMembers() {
-      return this.quarryMembers;
-   }
-
-   public void addQuarryMember() {
-      ++this.quarryMembers;
-   }
-
-   public void removeQuarryMember() {
-      --this.quarryMembers;
-   }
-
-   public void setQuarryMembers(int i) {
-      this.quarryMembers = i;
-   }
-
+    public void setQuarryMembers(int i)
+    {
+        this.quarryMembers = i;
+    }
 }

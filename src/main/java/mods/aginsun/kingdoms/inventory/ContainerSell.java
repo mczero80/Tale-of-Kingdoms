@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 
 public final class ContainerSell extends Container
 {
-    protected TileEntitySell tile_entity;
+    private TileEntitySell tile_entity;
 
     public ContainerSell(TileEntitySell tile_entity, InventoryPlayer player_inventory)
     {
@@ -22,23 +22,6 @@ public final class ContainerSell extends Container
     public boolean canInteractWith(EntityPlayer player)
     {
         return this.tile_entity.isUseableByPlayer(player);
-    }
-
-    protected void bindPlayerInventory(InventoryPlayer player_inventory)
-    {
-        int i;
-        for(i = 0; i < 3; ++i)
-        {
-            for(int j = 0; j < 9; ++j)
-            {
-                this.addSlotToContainer(new Slot(player_inventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
-            }
-        }
-
-        for(i = 0; i < 9; ++i)
-        {
-            this.addSlotToContainer(new Slot(player_inventory, i, 8 + i * 18, 142));
-        }
     }
 
     @Override
@@ -74,5 +57,22 @@ public final class ContainerSell extends Container
             }
         }
         return stack;
+    }
+
+    private void bindPlayerInventory(InventoryPlayer player_inventory)
+    {
+        int i;
+        for(i = 0; i < 3; ++i)
+        {
+            for(int j = 0; j < 9; ++j)
+            {
+                this.addSlotToContainer(new Slot(player_inventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+            }
+        }
+
+        for(i = 0; i < 9; ++i)
+        {
+            this.addSlotToContainer(new Slot(player_inventory, i, 8 + i * 18, 142));
+        }
     }
 }

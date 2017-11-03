@@ -1,0 +1,20 @@
+item.Coins.name=Coins
+
+keyBinding.conquest=Начать завоевание.
+
+gui.conquest.start=Начать новое завоевание.
+
+gui.fishingRod=Получить удочку!
+gui.fisher.dialog.for=Лучшие удочки можно получить только здесь.
+
+gui.startConquest.line_1=Наступили Великие Приливы Тьмы.
+gui.startConquest.line_2=Рефикули пришли до вас, чтобы сохранить то, что осталось.
+gui.startConquest.line_3=Ты последний наследник престола. Единственная надежда на мир.
+gui.startConquest.line_4=Ваше приключение начинается здесь, герой. Гильдия подготовит вас.
+gui.startConquest.line_5=Примечание: Строить вне королевства, если местоположение не указано для вас.
+gui.startConquest.line_6=Примечание: Продажа осуществляется через НПС.
+
+gui.cancel=Отмена.
+gui.exit=Выйти!
+
+npc.fisher.dialog.fishingRod=Вот тебе, твоя новая красивая удочка!

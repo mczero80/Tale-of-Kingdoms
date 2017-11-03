@@ -1,0 +1,20 @@
+item.Coins.name=Coins
+
+keyBinding.conquest=Start Conquest
+
+gui.conquest.start=Start new Conquest.
+
+gui.fishingRod=Get Fishing Rod!
+gui.fisher.dialog.for=Get your best fishing rods here lad.
+
+gui.startConquest.line_1=The Great Tides of Darkness has come.
+gui.startConquest.line_2=The Reficules have come and it is up to you to save what is left.
+gui.startConquest.line_3=You are the last heir to the throne. The only hope of the overworld.
+gui.startConquest.line_4=Your adventure starts here, hero. The Guild will prepare you.
+gui.startConquest.line_5=Note: Build outside of the kingdom unless the location is specified for you.
+gui.startConquest.line_6=Note: selling is done through a block next to the npcs.
+
+gui.cancel=Cancel.
+gui.exit=Exit!
+
+npc.fisher.dialog.fishingRod=Here ya go, your new beautiful fishing rod!

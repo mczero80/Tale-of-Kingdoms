@@ -1,10 +1,11 @@
 package mods.aginsun.kingdoms.util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public final class Buildings
 {
-    private static ArrayList buildingList = new ArrayList();
+    private static List<Boolean> buildingList = new ArrayList<Boolean>();
     public static boolean
             createGuild, kingdomCreated, smallhouse1, smallhouse2, largehouse1, well, itemshop, stockmarket, isTier2,
             smallhouse3, smallhouse4, largehouse2, builderhouse, barracks, foodshop, blockshop, isTier3, smallhouse5,
@@ -61,35 +62,35 @@ public final class Buildings
         addBuilding(stables);
     }
 
-    public static void addBuilding(boolean x)
+    public static void addBuilding(final boolean x)
     {
         buildingList.add(x);
     }
 
-    public static void setBuildingTrue(int number)
+    public static void setBuildingTrue(final int number)
     {
-        boolean h = (Boolean) buildingList.get(number);
-        h = true;
-        buildingList.set(number, h);
+        buildingList.set(number, true);
     }
 
-    public static void setBuildingState(boolean x, int number)
+    public static void setBuildingState(final boolean x, final int number)
     {
-        boolean h = (Boolean) buildingList.get(number);
-        buildingList.set(number, x);
+        if (buildingList.get(number))
+        {
+            buildingList.set(number, x);
+        }
     }
 
-    public static boolean getBuilding(int number)
+    public static boolean getBuilding(final int number)
     {
-        return (Boolean) getBuildingList().get(number);
+        return getBuildingList().get(number);
     }
 
-    public static ArrayList getBuildingList()
+    public static List<Boolean> getBuildingList()
     {
         return buildingList;
     }
 
-    public void setBuildingList(ArrayList buildingList)
+    public void setBuildingList(final List<Boolean> buildingList)
     {
         this.buildingList = buildingList;
     }
