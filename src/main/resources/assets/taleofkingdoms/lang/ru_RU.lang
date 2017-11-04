@@ -1,20 +1,80 @@
 item.Coins.name=Coins
 
-keyBinding.conquest=Начать завоевание.
+keyBinding.conquest=Начать завоевание
 
-gui.conquest.start=Начать новое завоевание.
+command.tok.worthy=Добавлен почёт!
+
+entity.BuilderKeeper.name=Городской строитель
+entity.Banker.name=Банкир
+entity.Fisher.name=Рыбак
+
+gui.bank.title=Банк
+gui.bank.deposit=Вложить
+gui.bank.deposit.all=Вложить всё
+gui.bank.withdraw=Забрать
+gui.bank.withdraw.all=Забрать всё
+gui.bank.totalMoney.player=Общая сумма денег у вас: %s Золотых монет
+gui.bank.totalMoney.bank=Общая сумма денег в банке: %s Золотых монет
+
+gui.build.resources.logs=Запас брёвен
+gui.build.resources.cobble=Запас булыжника
+gui.build.stage_1=Строительство Уровень 1 - Всего денег: %s Золотых монет
+gui.build.stage_2=Строительство Уровень 2 - Всего денег: %s Золотых монет
+gui.build.stage_3=Строительство Уровень 3 - Всего денег: %s Золотых монет
+gui.build.give.logs=Отдать стак брёвен
+gui.build.give.cobble=Отдать стак булыжника
+gui.build.buildings.stage_1=Уровень 1 Городская база
+gui.build.buildings.stage_2=Уровень 2 Городская база
+gui.build.buildings.stage_3=Уровень 3 Городская база
+gui.build.buildings.stage_4=Уровень 4 Городская база
+gui.build.buildings.stage_5=Уровень 5 Финал
+gui.build.buildings.smallHouse=Маленький домик
+gui.build.buildings.largeHouse=Большой дом
+gui.build.buildings.itemsShop=Магазин предметов
+gui.build.buildings.stockMarket=Фондовый рынок
+gui.build.buildings.builderHouse=Дом строителя
+gui.build.buildings.barracks=Казармы
+gui.build.buildings.foodShop=Продовольственный магазин
+gui.build.buildings.blocksShop=Магазин блоков
+gui.build.buildings.tavern=Таверна
+gui.build.buildings.chapel=Часовня
+gui.build.buildings.library=Библиотека
+gui.build.buildings.mageHall=Зал мага
+gui.build.buildings.lightHouse=маяк
+gui.build.buildings.easternTower=Восточная башня
+gui.build.buildings.fishermanHut=Рыбацкая хижина
+gui.build.buildings.windmill=Ветряная мельница
+gui.build.buildings.observerPost=Пост наблюдателя
+gui.build.buildings.centerTower=Центральная башня
+gui.build.buildings.northernTower=Северная башня
+gui.build.buildings.coliseum=Колизей
+gui.build.buildings.stables=Конюшни
+gui.build.buildings.zeppelin=Дирижабль
+gui.build.buildings.castle=Замок
+
+gui.notEnough=Вам не хватает золота!
+gui.conquest.start=Начать новое завоевание
 
 gui.fishingRod=Получить удочку!
 gui.fisher.dialog.for=Лучшие удочки можно получить только здесь.
 
 gui.startConquest.line_1=Наступили Великие Приливы Тьмы.
-gui.startConquest.line_2=Рефикули пришли до вас, чтобы сохранить то, что осталось.
+gui.startConquest.line_2=Рефикули пришли до тебя, чтобы сохранить то, что осталось.
 gui.startConquest.line_3=Ты последний наследник престола. Единственная надежда на мир.
-gui.startConquest.line_4=Ваше приключение начинается здесь, герой. Гильдия подготовит вас.
+gui.startConquest.line_4=Ваше приключение начинается здесь, герой. Гильдия подготовит тебя.
 gui.startConquest.line_5=Примечание: Строить вне королевства, если местоположение не указано для вас.
 gui.startConquest.line_6=Примечание: Продажа осуществляется через НПС.
 
-gui.cancel=Отмена.
-gui.exit=Выйти!
+gui.cancel=Отмена
+gui.exit=Выйти
+
+npc.banker.dialog.welcome=Банкир: Я буду хранить ваше золото в безопасности.
+npc.banker.dialog.bye=Банкир: Обещаю, я не буду тратить это!
+
+npc.cityBuilder.dialog_1=Городской строитель: Мой король! Вы все еще не достойны создания королевства. Мастер Гильдии подготовит вас.
+npc.cityBuilder.dialog_2=Городской строитель: Давайте начнем строительство!
+npc.cityBuilder.dialog_3=Городской строитель: Давайте построим свой город мой сеньор! Показывайте дорогу!
 
 npc.fisher.dialog.fishingRod=Вот тебе, твоя новая красивая удочка!
+
+npc.warden.dialog=Староста: староста гильдии к вашим услугам.

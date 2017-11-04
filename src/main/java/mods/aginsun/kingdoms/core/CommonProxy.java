@@ -18,7 +18,6 @@ public class CommonProxy implements IGuiHandler
     public void Init()
     {
         FMLCommonHandler.instance().bus().register(new CommonTickHandler());
-        //TickRegistry.registerTickHandler(new CommonTickHandler(), Side.SERVER);
     }
 
     @Override
@@ -32,11 +31,6 @@ public class CommonProxy implements IGuiHandler
     }
 
     public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z)
-    {
-        return null;
-    }
-
-    public World getClientWorld()
     {
         return null;
     }

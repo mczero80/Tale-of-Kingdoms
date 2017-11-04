@@ -1,6 +1,5 @@
 package mods.aginsun.kingdoms.handlers;
 
-
 public final class ResourceHandler
 {
     private int woodPool = 0, cobblePool = 0, woodResource = 0, cobbleResource = 0;
@@ -43,12 +42,18 @@ public final class ResourceHandler
 
     public void decreaseWoodPool(int i)
     {
-        this.woodPool -= i;
+        if (woodPool > 0)
+        {
+            this.woodPool -= i;
+        }
     }
 
     public void decreaseCobblePool(int i)
     {
-        this.cobblePool -= i;
+        if (cobblePool > 0)
+        {
+            this.cobblePool -= i;
+        }
     }
 
     public void setwoodResource(int i)
@@ -73,21 +78,33 @@ public final class ResourceHandler
 
     public void addwoodResource(int i)
     {
-        this.woodResource += i;
+        if (woodResource <= 320)
+        {
+            this.woodResource += i;
+        }
     }
 
     public void addcobbleResource(int i)
     {
-        this.cobbleResource += i;
+        if (cobbleResource <= 320)
+        {
+            this.cobbleResource += i;
+        }
     }
 
     public void decreasewoodResource(int i)
     {
-        this.woodResource -= i;
+        if (woodResource > 0)
+        {
+            this.woodResource -= i;
+        }
     }
 
     public void decreasecobbleResource(int i)
     {
-        this.cobbleResource -= i;
+        if (cobbleResource > 0)
+        {
+            this.cobbleResource -= i;
+        }
     }
 }

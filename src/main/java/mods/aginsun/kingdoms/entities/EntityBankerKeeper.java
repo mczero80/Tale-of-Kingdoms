@@ -3,7 +3,10 @@ package mods.aginsun.kingdoms.entities;
 import mods.aginsun.kingdoms.client.guis.GuiBank;
 import mods.aginsun.kingdoms.entities.api.EntityNPC;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
@@ -11,7 +14,7 @@ public final class EntityBankerKeeper extends EntityNPC
 {
     public EntityBankerKeeper(World world)
     {
-        super(world, null, 40.0F);
+        super(world, new ItemStack(Items.book), 40.0F);
     }
 
     @Override
@@ -32,14 +35,13 @@ public final class EntityBankerKeeper extends EntityNPC
         if(this.canInteractWith(entityplayer))
         {
             this.heal(100.0F);
-            final Minecraft minecraft = Minecraft.getMinecraft();
 
             if(!this.world.isRemote)
             {
-                entityplayer.addChatMessage(new ChatComponentText("Banker: I will keep your gold safe."));
+                entityplayer.addChatMessage(new ChatComponentText(I18n.format("npc.banker.dialog.welcome")));
             }
 
-            minecraft.displayGuiScreen(new GuiBank(entityplayer, super.world));
+            Minecraft.getMinecraft().displayGuiScreen(new GuiBank(entityplayer, super.world));
         }
         return true;
     }

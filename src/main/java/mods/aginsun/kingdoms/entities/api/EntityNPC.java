@@ -1,6 +1,8 @@
 package mods.aginsun.kingdoms.entities.api;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -9,7 +11,7 @@ public class EntityNPC extends EntityCreature
 {
     private ItemStack defaultHeldItem;
     protected World world;
-    protected EntityPlayer player;
+    protected EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 
     public EntityNPC(World par1World, ItemStack defaultHeldItem, float i)
     {
@@ -17,6 +19,13 @@ public class EntityNPC extends EntityCreature
         this.setHealth(i);
         this.world = par1World;
         this.defaultHeldItem = defaultHeldItem;
+    }
+
+    @Override
+    protected void applyEntityAttributes()
+    {
+        super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.5D);
     }
 
     @Override

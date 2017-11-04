@@ -2,7 +2,58 @@ item.Coins.name=Coins
 
 keyBinding.conquest=Start Conquest
 
-gui.conquest.start=Start new Conquest.
+command.tok.worthy=Added worthy!
+
+entity.BuilderKeeper.name=City builder
+entity.Banker.name=Banker
+entity.Fisher.name=Fisher
+
+gui.bank.title=Bank
+gui.bank.deposit=Deposit
+gui.bank.deposit.all=Deposit all
+gui.bank.withdraw=Withdraw
+gui.bank.withdraw.all=Withdraw all
+gui.bank.totalMoney.player=Total money you have: %s Gold Coins
+gui.bank.totalMoney.bank=Total money in the bank: %s Gold Coins
+
+gui.build.resources.logs=Logs resource
+gui.build.resources.cobble=Cobblestone resource
+gui.build.stage_1=Build Tier 1 - Total Money: %s Gold Coins
+gui.build.stage_2=Build Tier 2 - Total Money: %s Gold Coins
+gui.build.stage_3=Build Tier 3 - Total Money: %s Gold Coins
+gui.build.give.logs=Give 64 Wood Logs
+gui.build.give.cobble=Give 64 Cobblestone
+gui.build.buildings.stage_1=Tier 1 City base
+gui.build.buildings.stage_2=Tier 2 City base
+gui.build.buildings.stage_3=Tier 3 City base
+gui.build.buildings.stage_4=Tier 4 City base
+gui.build.buildings.stage_5=Tier 5 Final
+gui.build.buildings.smallHouse=Small house
+gui.build.buildings.largeHouse=Large house
+gui.build.buildings.itemsShop=Items shop
+gui.build.buildings.stockMarket=Stock market
+gui.build.buildings.builderHouse=Builder house
+gui.build.buildings.barracks=Barracks
+gui.build.buildings.foodShop=Food shop
+gui.build.buildings.blocksShop=Blocks shop
+gui.build.buildings.tavern=Tavern
+gui.build.buildings.chapel=Chapel
+gui.build.buildings.library=Library
+gui.build.buildings.mageHall=Mage hall
+gui.build.buildings.lightHouse=Lighthouse
+gui.build.buildings.easternTower=Eastern tower
+gui.build.buildings.fishermanHut=Fisherman hut
+gui.build.buildings.windmill=Windmill
+gui.build.buildings.observerPost=Observer post
+gui.build.buildings.centerTower=Center tower
+gui.build.buildings.northernTower=Northern tower
+gui.build.buildings.coliseum=Coliseum
+gui.build.buildings.stables=Stables
+gui.build.buildings.zeppelin=Zeppelin
+gui.build.buildings.castle=Castle
+
+gui.notEnough=You don't have enough gold!
+gui.conquest.start=Start new Conquest
 
 gui.fishingRod=Get Fishing Rod!
 gui.fisher.dialog.for=Get your best fishing rods here lad.
@@ -14,7 +65,16 @@ gui.startConquest.line_4=Your adventure starts here, hero. The Guild will prepar
 gui.startConquest.line_5=Note: Build outside of the kingdom unless the location is specified for you.
 gui.startConquest.line_6=Note: selling is done through a block next to the npcs.
 
-gui.cancel=Cancel.
-gui.exit=Exit!
+gui.cancel=Cancel
+gui.exit=Exit
+
+npc.banker.dialog.welcome=Banker: I will keep your gold safe.
+npc.banker.dialog.bye=Banker: I promise I won't spend this!
+
+npc.cityBuilder.dialog_1=City Builder: My king! You are still not worthy of creating a kingdom. The Guild Master will prepare you.
+npc.cityBuilder.dialog_2=City Builder: Lets start building!
+npc.cityBuilder.dialog_3=City Builder: Let us build your city my liege! Lead the way!
 
 npc.fisher.dialog.fishingRod=Here ya go, your new beautiful fishing rod!
+
+npc.warden.dialog=Warden: The guild's warden at your service.

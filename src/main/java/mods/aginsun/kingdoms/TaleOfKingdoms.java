@@ -14,6 +14,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import mods.aginsun.kingdoms.core.CommonProxy;
 import mods.aginsun.kingdoms.entities.EntityRegistryToK;
 import mods.aginsun.kingdoms.handlers.EntityLivingHandler;
+import mods.aginsun.kingdoms.handlers.PickupHandler;
 import mods.aginsun.kingdoms.handlers.SaveHandlerToK;
 import mods.aginsun.kingdoms.items.Itemcoins;
 import mods.aginsun.kingdoms.util.CommandGoldTaleOfKingdoms;
@@ -51,14 +52,13 @@ public class TaleOfKingdoms
     @EventHandler
     public void serverStarting(FMLServerStartingEvent e)
     {
-        CommandHandler commandManager = (CommandHandler)e.getServer().getCommandManager();
-        commandManager.registerCommand(new CommandGoldTaleOfKingdoms());
+        ((CommandHandler) e.getServer().getCommandManager()).registerCommand(new CommandGoldTaleOfKingdoms());
     }
 
     @EventHandler
     public void serverStarted(FMLServerStartedEvent e)
     {
         FMLCommonHandler.instance().bus().register(new SaveHandlerToK());
-        //GameRegistry.registerPickupHandler(new PickupHandler());
+        FMLCommonHandler.instance().bus().register(new PickupHandler());
     }
 }

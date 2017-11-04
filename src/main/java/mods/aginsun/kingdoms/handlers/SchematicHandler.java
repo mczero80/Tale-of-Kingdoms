@@ -73,7 +73,7 @@ public final class SchematicHandler
 
                                 world.spawnEntityInWorld(block);
                             } else {
-                                System.out.println("ERRRROR " + var8.entityName);
+                                System.out.println("ERROR " + var8.entityName);
                             }
 
                             ++this.index;

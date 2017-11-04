@@ -24,15 +24,6 @@ public final class SaveHandlerToK {
        this.setData(e.player);
    }
 
-   /*public void onPlayerLogin(EntityPlayer player) {
-      this.getData(player);
-      Buildings.registerBuildings();
-   }*/
-
-   /*public void onPlayerLogout(EntityPlayer player) {
-      this.setData(player);
-   }*/
-
    public void getData(EntityPlayer player) {
       if(player != null) {
          this.nbt = player.getEntityData().getCompoundTag("PlayerPersisted");
@@ -234,8 +225,4 @@ public final class SaveHandlerToK {
       this.nbt.removeTag(name);
       this.nbt.setInteger(name, Math.round(f));
    }
-
-   public void onPlayerChangedDimension(EntityPlayer player) {}
-
-   public void onPlayerRespawn(EntityPlayer player) {}
 }

@@ -3,6 +3,7 @@ package mods.aginsun.kingdoms.entities;
 import mods.aginsun.kingdoms.client.guis.GuiWardenMenu;
 import mods.aginsun.kingdoms.entities.api.EntityNPC;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -29,7 +30,7 @@ public final class EntityBarracksKeeper extends EntityNPC
     {
         if(!this.world.isRemote)
         {
-            entityplayer.addChatMessage(new ChatComponentText("Warden: The guild\'s warden at your service."));
+            entityplayer.addChatMessage(new ChatComponentText(I18n.format("npc.warden.dialog")));
         }
 
         if(this.canInteractWith(entityplayer))
